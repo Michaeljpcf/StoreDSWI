@@ -9,7 +9,7 @@ using StoreDSWI.Entities;
 
 namespace StoreDSWI.Database
 {
-    public class CBContext : DbContext
+    public class CBContext : DbContext, IDisposable
     {
         public CBContext() : base("StoreDSWIConnection")
         {

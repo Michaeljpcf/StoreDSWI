@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreDSWI.Entities", "Store
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreDSWI.Database", "StoreDSWI.Database\StoreDSWI.Database.csproj", "{D87ACC35-29E1-4C55-ACBD-6623E08ECDB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreDSWI.Services", "StoreDSWI.Services\StoreDSWI.Services.csproj", "{24AF5508-8840-4507-9CCC-D06E5EBEA2E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D87ACC35-29E1-4C55-ACBD-6623E08ECDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D87ACC35-29E1-4C55-ACBD-6623E08ECDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D87ACC35-29E1-4C55-ACBD-6623E08ECDB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24AF5508-8840-4507-9CCC-D06E5EBEA2E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24AF5508-8840-4507-9CCC-D06E5EBEA2E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24AF5508-8840-4507-9CCC-D06E5EBEA2E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24AF5508-8840-4507-9CCC-D06E5EBEA2E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
