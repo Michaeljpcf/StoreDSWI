@@ -1,0 +1,18 @@
+﻿@model StoreDSWI.Entities.Category
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Editar Categoría</h2>
+
+<form method="post">
+    <input type="hidden" name="ID" value="@Model.ID" />
+
+    <label>Nombre</label>
+    <input name="Name" value="@Model.Name" />
+
+    <label>Descripción</label>
+    <input name="Description" value="@Model.Description" />
+
+    <button type="submit">Guardar</button>
+</form>

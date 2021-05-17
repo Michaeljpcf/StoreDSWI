@@ -1,0 +1,15 @@
+﻿@model StoreDSWI.Entities.Category
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar Categoría</h2>
+
+<h1>¿Estas seguro que deseas eliminar la Categoria?</h1>
+
+<form method="post">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <button type="submit">Si Eliminar</button>
+</form>
+
+<a href="/Index">Cancelar</a>
