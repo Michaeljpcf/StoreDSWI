@@ -1,18 +1,34 @@
 ﻿@model StoreDSWI.Entities.Category
 @{
     ViewBag.Title = "Edit";
+
+    var trueChecked = Model.isFeatured ? "checked" : string.Empty;
+    var falseChecked = !Model.isFeatured ? "checked" : string.Empty;
 }
 
-<h2>Editar Categoría</h2>
+<div class="container">
 
-<form method="post">
-    <input type="hidden" name="ID" value="@Model.ID" />
+    <h2>Editar Categoría</h2>
 
-    <label>Nombre</label>
-    <input name="Name" value="@Model.Name" />
+    <form method="post">
+        <input type="hidden" name="ID" value="@Model.ID" />
 
-    <label>Descripción</label>
-    <input name="Description" value="@Model.Description" />
+        <div class="default-form-box">
+            <label>Nombre</label>
+            <input name="Name" value="@Model.Name" />
+        </div>
+        <div class="default-form-box">
+            <label>Descripción</label>
+            <input name="Description" value="@Model.Description" />
+        </div>
 
-    <button type="submit">Guardar</button>
-</form>
+        <div class="form-group" style="font-size:16px;">
+            <label style="font-size:18px;">¿Es destacado?</label>
+            <input type="radio" name="isFeatured" value="true" @trueChecked/> Si
+            <input type="radio" name="isFeatured" value="false" @falseChecked/> No
+        </div>
+
+        <button type="submit">Guardar</button>
+    </form>
+
+</div>

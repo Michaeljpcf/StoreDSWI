@@ -6,12 +6,14 @@ using System.Web.Mvc;
 //
 using StoreDSWI.Entities;
 using StoreDSWI.Services;
+using StoreDSWI.Web.ViewModels;
 
 namespace StoreDSWI.Web.Controllers
 {
     public class ProductController : Controller
     {
         ProductsService productsService = new ProductsService();
+        CategoriesService categoriesService = new CategoriesService();
 
         public ActionResult Index()
         {
@@ -33,14 +35,46 @@ namespace StoreDSWI.Web.Controllers
         //CREAR
         [HttpGet]
         public ActionResult Create()
-        {
-            return PartialView();
+        {            
+            var categories = categoriesService.GetCategories();
+            return PartialView(categories);
         }
 
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult Create(NewCategoryViewModel model)
         {
-            productsService.SaveProduct(product);
+            var newProduct = new Product();
+
+            newProduct.Name = model.Name;
+            newProduct.Description = model.Description;
+            newProduct.Price = model.Price;
+            newProduct.Category = categoriesService.GetCategory(model.CategoryID);
+
+            productsService.SaveProduct(newProduct);
+            return RedirectToAction("ProductTable");
+        }
+
+        //ACTUALIZAR
+        [HttpGet]
+        public ActionResult Edit(int ID)
+        {
+            var product = productsService.GetProduct(ID);
+
+            return PartialView(product);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Product product)
+        {
+            productsService.UpdateProduct(product);
+            return RedirectToAction("ProductTable");
+        }
+
+        //ELIMINAR
+        [HttpPost]
+        public ActionResult Delete(int ID)
+        {
+            productsService.DeleteProduct(ID);
             return RedirectToAction("ProductTable");
         }
     }

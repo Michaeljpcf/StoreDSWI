@@ -4,9 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+    <div class="container">
 
-@foreach (var category in Model)
-{
-    <h1>@category.Name</h1>
-}
+        @foreach (var category in Model)
+        {
+            <h1>@category.Name</h1>
+        }
+    </div>

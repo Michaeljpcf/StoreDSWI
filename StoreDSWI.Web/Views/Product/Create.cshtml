@@ -1,25 +1,53 @@
-﻿
+﻿@model List<Category>
 @{
     ViewBag.Title = "Create";
 }
 
-<h2>Crear Producto</h2>
+<h2 class="text-center form-group">Crear Producto</h2>
 
-<form method="post">
-    <label>Nombre</label>
-    <input name="Name" />
+<form id="createProduct">
 
-    <br />
+    <div class="default-form-box">
+        <label>Categoría</label>
+        <select name="CategoryID">
+            @foreach (var category in Model)
+            {
+                <option value="@category.ID">@category.Name</option>
+            }
+        </select>
+    </div>
 
-    <label>Descripción</label>
-    <input name="Description" />
+    <div class="default-form-box">
+        <label>Nombre</label>
+        <input name="Name" />
+    </div>
 
-    <br />
+    <div class="default-form-box">
+        <label>Descripción</label>
+        <input name="Descripción" />
+    </div>
 
-    <label>Price</label>
-    <input name="Price" />
+    <div class="default-form-box">
+        <label>Precio</label>
+        <input name="Price" />
+    </div>
 
-    <br />
-
-    <button type="submit">Guardar</button>
+    <button class="btn btn-default" id="saveBtn" type="button">Guardar</button>
 </form>
+
+<script type="text/javascript">
+    $("#saveBtn").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Product/Create',
+            data: $("#createProduct").serialize()
+        })
+            .done(function (response) {
+                $("#tableContainer").html(response);
+                $("#actionContainer").html("");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
+</script>

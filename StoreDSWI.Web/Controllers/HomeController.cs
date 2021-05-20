@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StoreDSWI.Services;
+using StoreDSWI.Web.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,12 @@ namespace StoreDSWI.Web.Controllers
 {
     public class HomeController : Controller
     {
+        CategoriesService categoryService = new CategoriesService();
         public ActionResult Index()
         {
-            return View();
+            HomeViewModel model = new HomeViewModel();
+            model.FeaturedCategories = categoryService.GetFeaturedCategories();
+            return View(model);
         }
 
         public ActionResult About()

@@ -3,14 +3,68 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Crear Categoría</h2>
+<div class="container">
+    <h2>Crear Categoría</h2>
 
-<form method="post">
-    <label>Nombre</label>
-    <input name="Name"/>
+    <form method="post">
+        <div class="default-form-box">
+            <label>Nombre</label>
+            <input name="Name" />
+        </div>
+        <div class="default-form-box">
+            <label>Descripción</label>
+            <input name="Description" />
+        </div>
+        <div class="default-form-box">
+            <label>Imagen</label>
+            <input id="ImageURL" name="ImageURL" type="hidden" />
+            <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+        </div>
 
-    <label>Descripción</label>
-    <input name="Description"/>
+        <div class="form-group" style="font-size:16px;">
+            <label style="font-size:18px;">¿Es destacado?</label>
+            <input type="radio" name="isFeatured" value="true" /> Si
+            <input type="radio" name="isFeatured" value="false" /> No
+        </div>
 
-    <button type="submit">Guardar</button>
-</form>
+        <button type="submit" class="btn btn-default">Guardar</button>
+
+        <div class="img-responsive" style="float:right;">
+            <img id="categoryImage" />
+        </div>
+
+    </form>
+</div>
+
+<script>
+    $("#imageUpload").change(function () {
+        var element = this;
+		var formData = new FormData();
+		var totalFiles = element.files.length;
+
+		for (var i = 0; i < totalFiles; i++) {
+			var file = element.files[i];
+			formData.append("Photo", file);
+		}
+
+        $.ajax({
+            type: 'POST',
+			url: '@Url.Action("UploadImage", "Shared")',
+			dataType: 'json',
+			data: formData,
+			contentType: false,
+			processData: false
+        })
+        .done(function (response) {
+            console.log(response);
+
+            if (response.Success) {
+        		$("#ImageURL").val(response.ImageURL);
+        		$("#categoryImage").attr("src", response.ImageURL);
+        	}
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FAIL");
+        });
+    });
+</script>

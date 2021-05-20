@@ -12,6 +12,6 @@ namespace StoreDSWI.Entities
     {
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal Price { get; set; }
-        public Category Category { get; set; }        
+        public virtual Category Category { get; set; }        
     }
 }
