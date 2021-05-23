@@ -1,34 +1,103 @@
-﻿@model StoreDSWI.Entities.Category
+﻿@model EditCategoryViewModel
 @{
     ViewBag.Title = "Edit";
 
     var trueChecked = Model.isFeatured ? "checked" : string.Empty;
     var falseChecked = !Model.isFeatured ? "checked" : string.Empty;
+
+    var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/images/system/placeholder-image.png";
 }
 
-<div class="container">
+@*<div class="container">*@
+    <div class="row">
+        <div class="col-md-12">
+            <div class="title-section">
+                <h2 class="title">
+                    Editar Categoría
+                </h2>
+            </div>
+        </div>
+    </div>
 
-    <h2>Editar Categoría</h2>
-
-    <form method="post">
+    <form id="editCategory">
         <input type="hidden" name="ID" value="@Model.ID" />
-
-        <div class="default-form-box">
-            <label>Nombre</label>
-            <input name="Name" value="@Model.Name" />
+        <div class="row">
+            <div class="col-md-8">
+                <div class="default-form-box">
+                    <label>Nombre</label>
+                    <input name="Name" value="@Model.Name" />
+                </div>
+                <div class="default-form-box">
+                    <label>Descripción</label>
+                    <input name="Description" value="@Model.Description" />
+                </div>
+                <div class="default-form-box">
+                    <label>Imagen</label>
+                    <input type="hidden" id="ImageURL" name="ImageURL" value="@Model.ImageURL" />
+                    <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+                </div>
+                <div class="form-group">
+                    <label>¿Es destacado?</label>
+                    <div class="input-group">
+                        <div class="radio form-control">
+                            <label><input name="isFeatured" type="radio" value="True" @trueChecked /> Si</label>
+                        </div>
+                        <div class="radio form-control">
+                            <label><input name="isFeatured" type="radio" value="False" @falseChecked /> No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <img src="@imageURL" class="img-thumbnail" id="categoryImage" />
+            </div>
         </div>
-        <div class="default-form-box">
-            <label>Descripción</label>
-            <input name="Description" value="@Model.Description" />
-        </div>
 
-        <div class="form-group" style="font-size:16px;">
-            <label style="font-size:18px;">¿Es destacado?</label>
-            <input type="radio" name="isFeatured" value="true" @trueChecked/> Si
-            <input type="radio" name="isFeatured" value="false" @falseChecked/> No
-        </div>
-
-        <button type="submit">Guardar</button>
+        <button id="updateBtn" type="button" class="btn btn-primary">Actualizar</button>
     </form>
+@*</div>*@
 
-</div>
+<script>
+    $("#imageUpload").change(function () {
+        var element = this;
+        var formData = new FormData();
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadImage", "Shared")',
+            dataType: 'json',
+            data: formData,
+            contentType: false,
+            processData: false
+        })
+        .done(function (response) {
+            console.log(response);
+            if (response.Success) {
+                $("#ImageURL").val(response.ImageURL);
+                $("#categoryImage").attr("src", response.ImageURL);
+            }
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FALLÓ");
+        });
+    });
+    $("#updateBtn").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Category/Edit',
+            data: $("#editCategory").serialize()
+        })
+        .done(function (response) {
+            $("#tableContiner").html(response);
+            $("#actionContainer").html("");
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FALLÓ");
+        });
+    });
+</script>

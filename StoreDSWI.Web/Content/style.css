@@ -513,19 +513,9 @@ h3.w3ls-title {
 /*-- //welcome --*/
 /*-- add-products --*/
 .w3ls-add-grids {
-    background: url(../images/img1.jpg)no-repeat 0px 0px;
-    background-size: cover;
 	width: 32.5%;
 	min-height: 250px;
 	float:left;
-}
-.w3ls-add-grids.w3ls-add-grids-mdl{
-    background: url(../images/img2.jpg)no-repeat 0px 0px; 
-	background-size: cover;
-}
-.w3ls-add-grids.w3ls-add-grids-mdl1{
-    background: url(../images/img3.jpg)no-repeat 0px 0px; 
-	background-size: cover;
 }
 .w3ls-add-grids.w3ls-add-grids-mdl {
     margin: 0 1em;
@@ -1301,7 +1291,7 @@ input.item_quantity:hover{
 }
 .checkbox input,.radio input {
     position: absolute;
-    left: -9999px;
+    /*left: -9999px;*/
 }
 .checkbox input + i:after {
     content: '';
@@ -2341,6 +2331,60 @@ p.sbmincart-empty-text {
     font-size: 1em;
     outline: none;
 }
+/* Title section
+---------------------------------------------------------------*/
+.title-section {
+    position: relative;
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+    .title-section.margin_bottom_17 {
+        margin-bottom: 17px;
+    }
+
+    .title-section .title {
+        font-size: 32px;
+        line-height: 66px;
+        font-weight: 500;
+        color: #333333;
+        position: relative;
+    }
+
+        .title-section .title:before {
+            content: "";
+            width: 60px;
+            height: 2.5px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #f63440;
+            margin: 0 auto;
+        }
+
+    .title-section.width-before-17 .title:before {
+        width: 17%;
+    }
+
+    .title-section.bg-before-white .title:before {
+        background-color: rgba(0,0,0,0.1);
+    }
+
+    .title-section .sup-title {
+        font-size: 24px;
+        line-height: 26px;
+        color: #333;
+        font-weight: 200;
+    }
+
+    .title-section .sub-title {
+        font-size: 18px;
+        line-height: 56px;
+        color: #6e6e6e;
+        font-weight: 300;
+    }
+
 /* Preloader
 ---------------------------------------------------------------*/
 #loading-overlay {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 //
 using StoreDSWI.Database;
 using StoreDSWI.Entities;
@@ -23,7 +24,7 @@ namespace StoreDSWI.Services
         {
             using (var context = new CBContext())
             {
-                return context.Categories.ToList();
+                return context.Categories.Include(x => x.Products).ToList();
             }
         }
 
@@ -51,6 +52,12 @@ namespace StoreDSWI.Services
                 context.SaveChanges();
             }
         }
+
+        public Category GetCategory(object categoryID)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteCategory(int ID)
         {
             using (var context = new CBContext())

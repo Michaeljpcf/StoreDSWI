@@ -16,7 +16,7 @@ namespace StoreDSWI.Services
         {
             using (var context = new CBContext())
             {
-                return context.Products.Find(ID);
+                return context.Products.Where(x => x.ID == ID).Include(x => x.Category).FirstOrDefault();
             }
         }
 

@@ -1,13 +1,32 @@
-﻿@model Product
+﻿@model EditProductViewModel
 @{
     ViewBag.Title = "Edit";
 }
 
-<h2>Editar Producto</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="title-section">
+            <h2 class="title">
+                Editar Producto
+            </h2>
+        </div>
+    </div>
+</div>
 
 <form id="editProduct">
 
     <input type="hidden" name="ID" value="@Model.ID" />
+
+    <div class="default-form-box">
+        <label>Categoría</label>
+        <select class="form-control" name="CategoryID">
+            @foreach (var category in Model.AvailableCategories)
+            {
+                var selected = category.ID == Model.CategoryID ? "selected" : string.Empty;
+                <option value="@category.ID" @selected>@category.Name</option>
+            }
+        </select>
+    </div>
 
     <div class="default-form-box">
         <label>Nombre</label>
@@ -39,7 +58,7 @@
             $("#actionContainer").html("");
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("FAIL");
+            alert("FALLÓ");
         });
     });
 </script>

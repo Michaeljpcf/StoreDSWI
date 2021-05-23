@@ -22,26 +22,31 @@ namespace StoreDSWI.Web.Controllers
 
         public ActionResult ProductTable(string search)
         {
-            var products = productsService.GetProducts();
+            ProductSearchViewModel model = new ProductSearchViewModel();
+
+            model.Products = productsService.GetProducts();
 
             if (string.IsNullOrEmpty(search) == false)
             {
-                products = products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+                model.SearchTerm = search;
+                model.Products = model.Products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
             }
 
-            return PartialView(products);
+            return PartialView(model);
         }
 
         //CREAR
         [HttpGet]
         public ActionResult Create()
-        {            
-            var categories = categoriesService.GetCategories();
-            return PartialView(categories);
+        {
+            NewProductViewModel model = new NewProductViewModel();
+            model.AvailableCategories = categoriesService.GetCategories();
+
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Create(NewCategoryViewModel model)
+        public ActionResult Create(NewProductViewModel model)
         {
             var newProduct = new Product();
 
@@ -58,15 +63,31 @@ namespace StoreDSWI.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int ID)
         {
+            EditProductViewModel model = new EditProductViewModel();
             var product = productsService.GetProduct(ID);
 
-            return PartialView(product);
+            model.ID = product.ID;
+            model.Name = product.Name;
+            model.Description = product.Description;
+            model.Price = product.Price;
+            model.CategoryID = product.Category != null ? product.Category.ID : 0;
+
+            model.AvailableCategories = categoriesService.GetCategories();
+
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(EditProductViewModel model)
         {
-            productsService.UpdateProduct(product);
+            var existingProduct = productsService.GetProduct(model.ID);
+            existingProduct.Name = model.Name;
+            existingProduct.Description = model.Description;
+            existingProduct.Price = model.Price;
+            existingProduct.Category = categoriesService.GetCategory(model.CategoryID);
+
+            productsService.UpdateProduct(existingProduct);
+
             return RedirectToAction("ProductTable");
         }
 

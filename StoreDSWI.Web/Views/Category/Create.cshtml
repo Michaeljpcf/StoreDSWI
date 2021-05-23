@@ -1,38 +1,55 @@
 ﻿
 @{
     ViewBag.Title = "Create";
+
+    var imageURL = "/Content/images/system/placeholder-image.png";
 }
 
 <div class="container">
-    <h2>Crear Categoría</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="title-section">
+                <h2 class="title">
+                    Crear Categoría
+                </h2>
+            </div>
+        </div>
+    </div>
 
-    <form method="post">
-        <div class="default-form-box">
-            <label>Nombre</label>
-            <input name="Name" />
-        </div>
-        <div class="default-form-box">
-            <label>Descripción</label>
-            <input name="Description" />
-        </div>
-        <div class="default-form-box">
-            <label>Imagen</label>
-            <input id="ImageURL" name="ImageURL" type="hidden" />
-            <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
-        </div>
-
-        <div class="form-group" style="font-size:16px;">
-            <label style="font-size:18px;">¿Es destacado?</label>
-            <input type="radio" name="isFeatured" value="true" /> Si
-            <input type="radio" name="isFeatured" value="false" /> No
+    <form id="createCategory">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="default-form-box">
+                    <label>Nombre</label>
+                    <input name="Name" />
+                </div>
+                <div class="default-form-box">
+                    <label>Descripción</label>
+                    <input name="Description" />
+                </div>
+                <div class="default-form-box">
+                    <label>Imagen</label>
+                    <input type="hidden" id="ImageURL" name="ImageURL" />
+                    <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+                </div>
+                <div class="form-group">
+                    <label>¿Es destacado?</label>
+                    <div class="input-group">
+                        <div class="radio form-control">
+                            <label><input name="isFeatured" type="radio" value="True" /> Si</label>
+                        </div>
+                        <div class="radio form-control">
+                            <label><input name="isFeatured" type="radio" value="False" /> No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <img class="img-thumbnail" id="categoryImage" src="@imageURL" />
+            </div>
         </div>
 
         <button type="submit" class="btn btn-default">Guardar</button>
-
-        <div class="img-responsive" style="float:right;">
-            <img id="categoryImage" />
-        </div>
-
     </form>
 </div>
 
@@ -64,7 +81,21 @@
         	}
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("FAIL");
+            alert("FALLÓ");
+        });
+    });
+    $("#saveBtn").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Category/Create',
+            data: $("#createCategory").serialize()
+        })
+            .done(function (response) {
+                $("#tableContiner").html(response);
+                $("#actionContainer").html("");
+            })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FALLÓ");
         });
     });
 </script>

@@ -1,0 +1,125 @@
+﻿@model CategorySearchViewModel
+
+
+<form method="post">
+    <div class="input-group form-group">
+        <input class="form-control" id="searchTxt" name="Search" style="padding: 23px;" />
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default" id="searchBtn">Buscar</button>
+        </div>
+    </div>
+</form>
+<button type="button" class="btn btn-primary text-uppercase" id="newBtn">Nueva Categoría</button>
+
+<div  style="margin-top: 30px;">
+    <table class="table table-striped table-bordered text-center" style="font-size: 17px;">
+        <thead>
+            <tr>
+                <td>Nombre Categoría</td>
+                <td>Cantidad Productos</td>
+                <td>Accciones</td>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Categories != null && Model.Categories.Count > 0)
+            {
+                foreach (var category in Model.Categories)
+                {
+                    <tr>
+                        <td>@category.Name</td>
+                        <td>
+                            @category.Products.Count
+                        </td>
+                        <td>
+                            <button class="editBtn btn btn-primary text-uppercase" style="margin-right: 15px;" data-id="@category.ID">Editar</button>
+                            <button class="deleteBtn btn btn-default text-uppercase" data-id="@category.ID">Eliminar</button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="3" class="text-danger">No se encontraron categorías.</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $("#searchBtn").click(function () {
+        var searchValue = $("#searchTxt").val();
+
+        $.ajax({
+            url: '/Category/CategoryTable',
+            data: {
+                search: searchValue
+            }
+        })
+            .done(function (response) {
+                $("#tableContiner").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FALLÓ");
+            });
+    });
+
+    $("#newBtn").click(function () {
+        $.ajax({
+            url: '/Category/Create',
+        })
+            .done(function (response) {
+                $("#actionContainer").html(response);
+
+                focusAction();
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FALLÓ");
+            });
+    });
+
+    $(".editBtn").click(function () {
+        $.ajax({
+            url: '/Category/Edit',
+            data: {
+                ID: $(this).attr('data-id')
+            }
+        })
+            .done(function (response) {
+                $("#actionContainer").html(response);
+
+                focusAction();
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FALLÓ");
+            });
+    });
+
+    $(".deleteBtn").click(function () {
+
+        var confirmDelete = confirm("¿Está seguro de que desea eliminar esta categoría?");
+
+        if (confirmDelete) {
+            $.ajax({
+                type: 'POST',
+                url: '/Category/Delete',
+                data: {
+                    ID: $(this).attr('data-id')
+                }
+            })
+                .done(function (response) {
+                    $("#tableContiner").html(response);
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("FALLÓ");
+                });
+        }
+    });
+
+    function focusAction() {
+        $('html, body').animate({
+            scrollTop: $("#actionContainer").offset().top - 100
+        }, 1000);
+    }
+</script>
+
+

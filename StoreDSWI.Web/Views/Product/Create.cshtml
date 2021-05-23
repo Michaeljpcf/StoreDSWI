@@ -1,16 +1,24 @@
-﻿@model List<Category>
+﻿@model NewProductViewModel
 @{
     ViewBag.Title = "Create";
 }
 
-<h2 class="text-center form-group">Crear Producto</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="title-section">
+            <h2 class="title">
+                Crear Producto</
+            </h2>
+        </div>
+    </div>
+</div>
 
 <form id="createProduct">
 
     <div class="default-form-box">
         <label>Categoría</label>
         <select name="CategoryID">
-            @foreach (var category in Model)
+            @foreach (var category in Model.AvailableCategories)
             {
                 <option value="@category.ID">@category.Name</option>
             }
@@ -24,7 +32,7 @@
 
     <div class="default-form-box">
         <label>Descripción</label>
-        <input name="Descripción" />
+        <input name="Description" />
     </div>
 
     <div class="default-form-box">
@@ -42,12 +50,12 @@
             url: '/Product/Create',
             data: $("#createProduct").serialize()
         })
-            .done(function (response) {
-                $("#tableContainer").html(response);
-                $("#actionContainer").html("");
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("FAIL");
-            });
+        .done(function (response) {
+            $("#tableContainer").html(response);
+            $("#actionContainer").html("");            
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FALLÓ");
+        });
     });
 </script>

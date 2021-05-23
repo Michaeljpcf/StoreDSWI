@@ -1,8 +1,31 @@
-﻿
+﻿label {
+    font-size: 18px;
+}
+
 a, a:visited, a:link, a:focus, a:hover, a:active {
     list-style: none;
     text-decoration: none;
     cursor: pointer;
+}
+
+.col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-xs-12, .col-xs-11, .col-xs-6, .col-xs-4, .col-xs-3 {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.row {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.container-fluid {
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
+.container {
+    padding-right: 4px;
+    padding-left: 4px;
 }
 
 .btn-default {
@@ -54,7 +77,7 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
 
 .default-form-box {
     margin-bottom: 20px;
-    width: 50%;
+    /*width: 50%;*/
 }
     .default-form-box label {
         font-weight: 400;
@@ -264,4 +287,41 @@ FLECHAS
 
 .swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {
     opacity: 0;
+}
+
+
+/*========================================
+SECTION BANNERS
+=========================================*/
+.section-banner {
+    padding-bottom: 60px;
+    position: relative;
+}
+
+.banner-layout > div {
+    margin-bottom: 12px;
+}
+
+.banner-layout .item .canvas {
+    overflow: hidden;
+    display: block;
+}
+
+    .banner-layout .item .canvas::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+.banner-layout .item .resizer {
+    width: 179%;
+    position: relative;
+    left: -39.5%;
+    height: auto;
+}
+
+.banner-layout .item img {
+    display: block;
+    max-width: 100%;
+    height: auto;
 }

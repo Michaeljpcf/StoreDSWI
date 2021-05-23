@@ -1,8 +1,13 @@
-﻿@*@model StoreDSWI.Web.ViewModels.HomeViewModel*@
+﻿@model StoreDSWI.Web.ViewModels.HomeViewModel
 @{
     ViewBag.Title = "Home Page";
 
-    //var firstCategory = Model.Categories.Where(category=>category.ImageURL != null).First();
+    var firstCategory = Model.FeaturedCategories[0];
+    var secondCategory = Model.FeaturedCategories[1];
+    var thirdCategory = Model.FeaturedCategories[2];
+    var fourthCategory = Model.FeaturedCategories[3];
+    var fifthCategory = Model.FeaturedCategories[4];
+    var sixthCategory = Model.FeaturedCategories[5];
 }
 
 <!-- banner -->
@@ -49,6 +54,7 @@
     <script src="~/Scripts/custom.js"></script>
 </div>
 <!-- //banner -->
+
 <!-- welcome -->
 <div class="welcome">
     <div class="container">
@@ -225,34 +231,49 @@
     </div>
 </div>
 <!-- //welcome -->
-<!-- add-products -->
-<div class="add-products">
-    <div class="container">
-        <div class="add-products-row">
-            <div class="w3ls-add-grids">
-                <a href="products1.html">
-                    <h4>TOP 10 TRENDS FOR YOU FLAT <span>20%</span> OFF</h4>
-                    <h6>Shop now <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></h6>
+
+<!-- add-categories -->
+<div class="section-banner">
+    <div class="banner-layout">
+
+        <div class="item col-sm-4 col-xs-12">
+            @if (firstCategory != null)
+            {
+                <a class="canvas" href="#">
+                    <div class="resizer">
+                        <img src="@firstCategory.ImageURL" title="@firstCategory.Name">
+                    </div>
                 </a>
-            </div>
-            <div class="w3ls-add-grids w3ls-add-grids-mdl">
-                <a href="products1.html">
-                    <h4>SUNDAY SPECIAL DISCOUNT FLAT <span>40%</span> OFF</h4>
-                    <h6>Shop now <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></h6>
-                </a>
-            </div>
-            <div class="w3ls-add-grids w3ls-add-grids-mdl1">
-                <a href="products.html">
-                    <h4>LATEST DESIGNS FOR YOU <span> Hurry !</span></h4>
-                    <h6>Shop now <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></h6>
-                </a>
-            </div>
-            <div class="clearfix"> </div>
+            }
         </div>
+
+        <div class="item col-sm-4 col-xs-12">
+            @if (secondCategory != null)
+            {
+                <a class="canvas" href="#">
+                    <div class="resizer">
+                        <img src="@secondCategory.ImageURL" title="@secondCategory.Name">
+                    </div>
+                </a>
+            }
+        </div>
+
+        <div class="item col-sm-4 col-xs-12">
+            @if (thirdCategory != null)
+            {
+                <a class="canvas" href="#">
+                    <div class="resizer">
+                        <img src="@thirdCategory.ImageURL" title="@thirdCategory.Name">
+                    </div>
+                </a>
+            }
+        </div>
+
     </div>
 </div>
-<!-- //add-products -->
-<!-- Swiper -->
+<!-- //add-categories -->
+
+<!-- add-products -->
 <div class="container">
     <div class="swiper-container productos">
         <div class="section-titulo">
@@ -414,7 +435,213 @@
         <div class="swiper-button-prev"></div>
     </div>
 </div>
-<!-- Swiper -->
+<!-- add-products -->
+
+<!-- add-categories -->
+<div class="section-banner">
+    <div class="banner-layout">
+
+        <div class="item col-sm-4 col-xs-12">
+            @if (fourthCategory != null)
+            {
+                <a class="canvas" href="#">
+                    <div class="resizer">
+                        <img src="@fourthCategory.ImageURL" title="@fourthCategory.Name">
+                    </div>
+                </a>
+            }
+        </div>
+
+        <div class="item col-sm-4 col-xs-12">
+            @if (fifthCategory != null)
+            {
+                <a class="canvas" href="#">
+                    <div class="resizer">
+                        <img src="@fifthCategory.ImageURL" title="@fifthCategory.Name">
+                    </div>
+                </a>
+            }
+        </div>
+
+        <div class="item col-sm-4 col-xs-12">
+            @if (sixthCategory != null)
+            {
+                <a class="canvas" href="#">
+                    <div class="resizer">
+                        <img src="@sixthCategory.ImageURL" title="@sixthCategory.Name">
+                    </div>
+                </a>
+            }
+        </div>
+
+    </div>
+</div>
+<!-- //add-categories -->
+
+<!-- add-products -->
+<div class="container">
+    <div class="swiper-container productos">
+        <div class="section-titulo">
+            <h3 class="w3ls-title">Productos más vendido</h3>
+            <a href="#">Ver más</a>
+        </div>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="producto-imagen">
+                    <a href="#" class="pixelProducto">
+                        <img src="~/Images/audifonos_gamer/audifono_gamer_1.jpg" class="img-responsive" />
+                    </a>
+                </div>
+
+                <div class="producto-info">
+                    <div class="nombre">AURICULAR HALION ( HA-Z25 ) GAMING | NEGRO C/ PLOMO | LED -MULTICOLOR</div>
+                    <div class="precioOriginal">S/ 399.00</div>
+                    <div class="descuento">-50%</div>
+                    <div class="oferta">S/ 199.00</div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="producto-imagen">
+                    <a href="#" class="pixelProducto">
+                        <img src="~/Images/audifonos_gamer/audifono_gamer_2.jpg" class="img-responsive" />
+                    </a>
+                </div>
+
+                <div class="producto-info">
+                    <div class="nombre">AURICULAR HALION ( HA-Z25 ) GAMING | NEGRO C/ PLOMO | LED -MULTICOLOR</div>
+                    <div class="precioOriginal">S/ 399.00</div>
+                    <div class="descuento">-50%</div>
+                    <div class="oferta">S/ 199.00</div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="producto-imagen">
+                    <a href="#" class="pixelProducto">
+                        <img src="~/Images/audifonos_gamer/audifono_gamer_1.jpg" class="img-responsive" />
+                    </a>
+                </div>
+
+                <div class="producto-info">
+                    <div class="nombre">AURICULAR HALION ( HA-Z25 ) GAMING | NEGRO C/ PLOMO | LED -MULTICOLOR</div>
+                    <div class="precioOriginal">S/ 399.00</div>
+                    <div class="descuento">-50%</div>
+                    <div class="oferta">S/ 199.00</div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="producto-imagen">
+                    <a href="#" class="pixelProducto">
+                        <img src="~/Images/audifonos_gamer/audifono_gamer_2.jpg" class="img-responsive" />
+                    </a>
+                </div>
+
+                <div class="producto-info">
+                    <div class="nombre">AURICULAR HALION ( HA-Z25 ) GAMING | NEGRO C/ PLOMO | LED -MULTICOLOR</div>
+                    <div class="precioOriginal">S/ 399.00</div>
+                    <div class="descuento">-50%</div>
+                    <div class="oferta">S/ 199.00</div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="producto-imagen">
+                    <a href="#" class="pixelProducto">
+                        <img src="~/Images/audifonos_gamer/audifono_gamer_1.jpg" class="img-responsive" />
+                    </a>
+                </div>
+
+                <div class="producto-info">
+                    <div class="nombre">AURICULAR HALION ( HA-Z25 ) GAMING | NEGRO C/ PLOMO | LED -MULTICOLOR</div>
+                    <div class="precioOriginal">S/ 399.00</div>
+                    <div class="descuento">-50%</div>
+                    <div class="oferta">S/ 199.00</div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="producto-imagen">
+                    <a href="#" class="pixelProducto">
+                        <img src="~/Images/audifonos_gamer/audifono_gamer_2.jpg" class="img-responsive" />
+                    </a>
+                </div>
+
+                <div class="producto-info">
+                    <div class="nombre">AURICULAR HALION ( HA-Z25 ) GAMING | NEGRO C/ PLOMO | LED -MULTICOLOR</div>
+                    <div class="precioOriginal">S/ 399.00</div>
+                    <div class="descuento">-50%</div>
+                    <div class="oferta">S/ 199.00</div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="producto-imagen">
+                    <a href="#" class="pixelProducto">
+                        <img src="~/Images/audifonos_gamer/audifono_gamer_1.jpg" class="img-responsive" />
+                    </a>
+                </div>
+
+                <div class="producto-info">
+                    <div class="nombre">AURICULAR HALION ( HA-Z25 ) GAMING | NEGRO C/ PLOMO | LED -MULTICOLOR</div>
+                    <div class="precioOriginal">S/ 399.00</div>
+                    <div class="descuento">-50%</div>
+                    <div class="oferta">S/ 199.00</div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="producto-imagen">
+                    <a href="#" class="pixelProducto">
+                        <img src="~/Images/audifonos_gamer/audifono_gamer_2.jpg" class="img-responsive" />
+                    </a>
+                </div>
+
+                <div class="producto-info">
+                    <div class="nombre">AURICULAR HALION ( HA-Z25 ) GAMING | NEGRO C/ PLOMO | LED -MULTICOLOR</div>
+                    <div class="precioOriginal">S/ 399.00</div>
+                    <div class="descuento">-50%</div>
+                    <div class="oferta">S/ 199.00</div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="producto-imagen">
+                    <a href="#" class="pixelProducto">
+                        <img src="~/Images/audifonos_gamer/audifono_gamer_1.jpg" class="img-responsive" />
+                    </a>
+                </div>
+
+                <div class="producto-info">
+                    <div class="nombre">AURICULAR HALION ( HA-Z25 ) GAMING | NEGRO C/ PLOMO | LED -MULTICOLOR</div>
+                    <div class="precioOriginal">S/ 399.00</div>
+                    <div class="descuento">-50%</div>
+                    <div class="oferta">S/ 199.00</div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="producto-imagen">
+                    <a href="#" class="pixelProducto">
+                        <img src="~/Images/audifonos_gamer/audifono_gamer_2.jpg" class="img-responsive" />
+                    </a>
+                </div>
+
+                <div class="producto-info">
+                    <div class="nombre">AURICULAR HALION ( HA-Z25 ) GAMING | NEGRO C/ PLOMO | LED -MULTICOLOR</div>
+                    <div class="precioOriginal">S/ 399.00</div>
+                    <div class="descuento">-50%</div>
+                    <div class="oferta">S/ 199.00</div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</div>
+<!-- add-products -->
+
 <!-- deals -->
 <div class="deals">
     <div class="container">
@@ -509,6 +736,7 @@
     </div>
 </div>
 <!-- //deals -->
+
 <!-- footer-top -->
 <div class="w3agile-ftr-top">
     <div class="container">
@@ -548,6 +776,7 @@
     </div>
 </div>
 <!-- //footer-top -->
+
 <!-- subscribe -->
 <div class="subscribe">
     <div class="container">
