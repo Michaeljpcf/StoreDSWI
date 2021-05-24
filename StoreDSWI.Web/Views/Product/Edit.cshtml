@@ -46,7 +46,7 @@
     <button class="btn btn-default" id="updateBtn" type="button">Actualizar</button>
 </form>
 
-<script type="text/javascript">
+<script>
     $("#updateBtn").click(function () {
         $.ajax({
             type: 'POST',
@@ -56,6 +56,12 @@
         .done(function (response) {
             $("#tableContainer").html(response);
             $("#actionContainer").html("");
+            Swal.fire({
+                icon: 'success',
+                title: 'Producto actualizado!',
+                showConfirmButton: false,
+                timer: 1500
+            })
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FALLÓ");

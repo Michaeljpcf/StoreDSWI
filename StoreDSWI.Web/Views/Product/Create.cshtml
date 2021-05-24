@@ -45,6 +45,7 @@
 
 <script type="text/javascript">
     $("#saveBtn").click(function () {
+
         $.ajax({
             type: 'POST',
             url: '/Product/Create',
@@ -52,7 +53,13 @@
         })
         .done(function (response) {
             $("#tableContainer").html(response);
-            $("#actionContainer").html("");            
+            $("#actionContainer").html("");    
+            Swal.fire({
+              icon: 'success',
+              title: 'Producto guardado!',
+              showConfirmButton: false,
+              timer: 1500
+            })
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FALLÓ");

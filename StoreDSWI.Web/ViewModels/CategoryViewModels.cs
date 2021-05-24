@@ -20,10 +20,6 @@ namespace StoreDSWI.Web.ViewModels
         public string Name { get; set; }
         [MaxLength(500)]
         public string Description { get; set; }
-        //public decimal Price { get; set; }
-
-        //public int CategoryID { get; set; }
-        //public string ImageURL { get; internal set; }
         public string ImageURL { get; set; }
         public bool isFeatured { get; set; }
     }

@@ -8,54 +8,52 @@
     var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/images/system/placeholder-image.png";
 }
 
-@*<div class="container">*@
-    <div class="row">
-        <div class="col-md-12">
-            <div class="title-section">
-                <h2 class="title">
-                    Editar Categoría
-                </h2>
-            </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="title-section">
+            <h2 class="title">
+                Editar Categoría
+            </h2>
         </div>
     </div>
+</div>
 
-    <form id="editCategory">
-        <input type="hidden" name="ID" value="@Model.ID" />
-        <div class="row">
-            <div class="col-md-8">
-                <div class="default-form-box">
-                    <label>Nombre</label>
-                    <input name="Name" value="@Model.Name" />
-                </div>
-                <div class="default-form-box">
-                    <label>Descripción</label>
-                    <input name="Description" value="@Model.Description" />
-                </div>
-                <div class="default-form-box">
-                    <label>Imagen</label>
-                    <input type="hidden" id="ImageURL" name="ImageURL" value="@Model.ImageURL" />
-                    <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
-                </div>
-                <div class="form-group">
-                    <label>¿Es destacado?</label>
-                    <div class="input-group">
-                        <div class="radio form-control">
-                            <label><input name="isFeatured" type="radio" value="True" @trueChecked /> Si</label>
-                        </div>
-                        <div class="radio form-control">
-                            <label><input name="isFeatured" type="radio" value="False" @falseChecked /> No</label>
-                        </div>
+<form id="editCategory">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <div class="row">
+        <div class="col-md-8">
+            <div class="default-form-box">
+                <label>Nombre</label>
+                <input name="Name" value="@Model.Name" />
+            </div>
+            <div class="default-form-box">
+                <label>Descripción</label>
+                <input name="Description" value="@Model.Description" />
+            </div>
+            <div class="default-form-box">
+                <label>Imagen</label>
+                <input type="hidden" id="ImageURL" name="ImageURL" value="@Model.ImageURL" />
+                <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+            </div>
+            <div class="form-group">
+                <label>¿Es destacado?</label>
+                <div class="input-group">
+                    <div class="radio form-control">
+                        <label><input name="isFeatured" type="radio" value="True" @trueChecked /> Si</label>
+                    </div>
+                    <div class="radio form-control">
+                        <label><input name="isFeatured" type="radio" value="False" @falseChecked /> No</label>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <img src="@imageURL" class="img-thumbnail" id="categoryImage" />
-            </div>
         </div>
+        <div class="col-md-4">
+            <img src="@imageURL" class="img-thumbnail" id="categoryImage" />
+        </div>
+    </div>
 
-        <button id="updateBtn" type="button" class="btn btn-primary">Actualizar</button>
-    </form>
-@*</div>*@
+    <button id="updateBtn" type="button" class="btn btn-default">Actualizar</button>
+</form>
 
 <script>
     $("#imageUpload").change(function () {
@@ -69,7 +67,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("UploadImage", "Shared")',
+            url: '/Shared/UploadImage',
             dataType: 'json',
             data: formData,
             contentType: false,
@@ -86,6 +84,7 @@
             alert("FALLÓ");
         });
     });
+    //
     $("#updateBtn").click(function () {
         $.ajax({
             type: 'POST',
@@ -93,8 +92,14 @@
             data: $("#editCategory").serialize()
         })
         .done(function (response) {
-            $("#tableContiner").html(response);
+            $("#tableContainer").html(response);
             $("#actionContainer").html("");
+            Swal.fire({
+                icon: 'success',
+                title: 'Categoría actualizada!',
+                showConfirmButton: false,
+                timer: 1500
+            })
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FALLÓ");

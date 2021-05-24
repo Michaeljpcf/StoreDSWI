@@ -11,7 +11,7 @@
 </form>
 <button type="button" class="btn btn-primary text-uppercase" id="newBtn">Nueva Categoría</button>
 
-<div  style="margin-top: 30px;">
+<div style="margin-top: 30px;">
     <table class="table table-striped table-bordered text-center" style="font-size: 17px;">
         <thead>
             <tr>
@@ -55,28 +55,28 @@
                 search: searchValue
             }
         })
-            .done(function (response) {
-                $("#tableContiner").html(response);
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("FALLÓ");
-            });
+        .done(function (response) {
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FALLÓ");
+        });
     });
-
+    //
     $("#newBtn").click(function () {
         $.ajax({
             url: '/Category/Create',
         })
-            .done(function (response) {
-                $("#actionContainer").html(response);
+        .done(function (response) {
+            $("#actionContainer").html(response);
 
-                focusAction();
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("FALLÓ");
-            });
+            focusAction();
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FALLÓ");
+        });
     });
-
+    //
     $(".editBtn").click(function () {
         $.ajax({
             url: '/Category/Edit',
@@ -84,35 +84,50 @@
                 ID: $(this).attr('data-id')
             }
         })
-            .done(function (response) {
-                $("#actionContainer").html(response);
+        .done(function (response) {
+            $("#actionContainer").html(response);
 
-                focusAction();
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("FALLÓ");
-            });
+            focusAction();
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FALLÓ");
+        });
     });
-
+    //
     $(".deleteBtn").click(function () {
 
-        var confirmDelete = confirm("¿Está seguro de que desea eliminar esta categoría?");
-
-        if (confirmDelete) {
-            $.ajax({
-                type: 'POST',
-                url: '/Category/Delete',
-                data: {
-                    ID: $(this).attr('data-id')
-                }
-            })
+        Swal.fire({            
+            title: "Eliminar Categoría",
+            text: "¿Está seguro de que desea eliminar esta categoría?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#218838',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar!',
+            cancelButtonText: 'Cancelar!'
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Category/Delete',
+                    data: {
+                        ID: $(this).attr('data-id')
+                    }
+                })
                 .done(function (response) {
-                    $("#tableContiner").html(response);
+                    $("#tableContainer").html(response);                    
+                    Swal.fire(
+                        'Eliminado!',
+                        'La categoría a sido eliminada!',
+                        'success'
+                    )
                 })
                 .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("FALLÓ");
                 });
-        }
+            }
+        });
     });
 
     function focusAction() {

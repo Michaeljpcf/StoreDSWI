@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-default">Guardar</button>
+        <button id="saveBtn" type="button" class="btn btn-default">Guardar</button>
     </form>
 </div>
 
@@ -66,7 +66,7 @@
 
         $.ajax({
             type: 'POST',
-			url: '@Url.Action("UploadImage", "Shared")',
+			url: '/Shared/UploadImage',
 			dataType: 'json',
 			data: formData,
 			contentType: false,
@@ -84,16 +84,24 @@
             alert("FALLÓ");
         });
     });
+    //
     $("#saveBtn").click(function () {
         $.ajax({
             type: 'POST',
             url: '/Category/Create',
             data: $("#createCategory").serialize()
         })
-            .done(function (response) {
-                $("#tableContiner").html(response);
-                $("#actionContainer").html("");
+        .done(function (response) {
+            console.log(response);
+            $("#tableContainer").html(response);
+            $("#actionContainer").html("");
+            Swal.fire({
+                icon: 'success',
+                title: 'Categoría guardada!',
+                showConfirmButton: false,
+                timer: 1500
             })
+        })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FALLÓ");
         });

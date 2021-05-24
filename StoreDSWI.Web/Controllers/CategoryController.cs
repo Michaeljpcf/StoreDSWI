@@ -17,7 +17,7 @@ namespace StoreDSWI.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var categories = categoryService.GetCategories();
+            //var categories = categoryService.GetCategories();
             return View();
         }
 

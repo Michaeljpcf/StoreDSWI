@@ -30,7 +30,7 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
 
 .btn-default {
     border: none;
-    outline: none!important;
+    outline: none !important;
     box-shadow: none;
     color: #fff;
     background: #f44336;
@@ -101,8 +101,12 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
         outline: none;
     }
 
-
-
+.swal2-popup{
+    font-size: 14px!important;
+}
+.swal2-styled.swal2-confirm {
+    background-color: #218838!important;
+}
 /*========================================
 SWIPER DE PRODUCTOS
 =========================================*/

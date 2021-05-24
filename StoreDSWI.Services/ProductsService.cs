@@ -20,6 +20,14 @@ namespace StoreDSWI.Services
             }
         }
 
+        public List<Product> GetProducts(List<int> IDs)
+        {
+            using (var context = new CBContext())
+            {
+                return context.Products.Where(product => IDs.Contains(product.ID)).ToList();
+            }
+        }
+
         public List<Product> GetProducts()
         {
             using (var context = new CBContext())

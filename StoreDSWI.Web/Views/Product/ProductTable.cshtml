@@ -6,7 +6,7 @@
 <form method="post">
 
     <div class="input-group form-group">
-        <input class="form-control" id="searchTxt" name="Search" style="padding: 23px;" value="@Model.SearchTerm"/>
+        <input class="form-control" id="searchTxt" name="Search" style="padding: 23px;" value="@Model.SearchTerm" />
         <div class="input-group-btn">
             <button type="button" class="btn btn-default" id="searchBtn">Buscar</button>
         </div>
@@ -45,6 +45,7 @@
                         <td>
                             <button class="editBtn btn btn-primary text-uppercase" style="margin-right: 15px;" data-id="@product.ID">Editar</button>
                             <button class="deleteBtn btn btn-default text-uppercase" data-id="@product.ID">Eliminar</button>
+                            <button class="addtoCart btn btn-default text-uppercase" data-id="@product.ID">Agregar al carro</button>
                         </td>
                     </tr>
                 }
@@ -69,12 +70,12 @@
                 search: searchValue
             }
         })
-        .done(function (response) {
-            $("#tableContainer").html(response);
-        })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("FALLÓ");
-        });
+            .done(function (response) {
+                $("#tableContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FALLÓ");
+            });
     });
 
     //
@@ -82,14 +83,14 @@
         $.ajax({
             url: '/Product/Create'
         })
-        .done(function (response) {
-            $("#actionContainer").html(response);
-            
-            focusAction();
-        })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("FALLÓ");
-        });
+            .done(function (response) {
+                $("#actionContainer").html(response);
+
+                focusAction();
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FALLÓ");
+            });
     });
 
     //
@@ -113,23 +114,50 @@
     //
     $(".deleteBtn").click(function () {
 
-        var confirmDelete = confirm("¿Estas seguro de eliminar el Producto?");
+        Swal.fire({            
+            title: "Eliminar Producto",
+            text: "¿Estas seguro de eliminar el Producto?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#218838',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar!',
+            cancelButtonText: 'Cancelar!'
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Product/Delete',
+                    data: {
+                        ID: $(this).attr('data-id')
+                    }
+                })
+                .done(function (response) {
+                    $("#tableContainer").html(response);                    
+                    Swal.fire(
+                        'Eliminado!',
+                        'El producto a sido eliminado!',
+                        'success'
+                    )
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("FALLÓ");
+                });
+            }
+        });
+    });
 
-        if (confirmDelete) {
-            $.ajax({
-                type: 'POST',
-                url: '/Product/Delete',
-                data: {
-                    ID: $(this).attr('data-id')
-                }
-            })
-            .done(function (response) {
-                $("#tableContainer").html(response);
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("FALLÓ");
-            });
-        }
+    //
+    var products = [];
+    $(".addtoCart").click(function () {
+        var productID = $(this).attr('data-id');
+
+        products.push(productID);
+
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+        alert("Producto agregado al carro");
+
     });
 
     function focusAction() {
