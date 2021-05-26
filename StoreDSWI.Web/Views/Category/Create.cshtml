@@ -5,54 +5,52 @@
     var imageURL = "/Content/images/system/placeholder-image.png";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="title-section">
-                <h2 class="title">
-                    Crear Categoría
-                </h2>
-            </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="title-section">
+            <h2 class="title">
+                Crear Categoría
+            </h2>
         </div>
     </div>
+</div>
 
-    <form id="createCategory">
-        <div class="row">
-            <div class="col-md-7">
-                <div class="default-form-box">
-                    <label>Nombre</label>
-                    <input name="Name" />
-                </div>
-                <div class="default-form-box">
-                    <label>Descripción</label>
-                    <input name="Description" />
-                </div>
-                <div class="default-form-box">
-                    <label>Imagen</label>
-                    <input type="hidden" id="ImageURL" name="ImageURL" />
-                    <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
-                </div>
-                <div class="form-group">
-                    <label>¿Es destacado?</label>
-                    <div class="input-group">
-                        <div class="radio form-control">
-                            <label><input name="isFeatured" type="radio" value="True" /> Si</label>
-                        </div>
-                        <div class="radio form-control">
-                            <label><input name="isFeatured" type="radio" value="False" /> No</label>
-                        </div>
+<form id="createCategory">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="default-form-box">
+                <label>Nombre</label>
+                <input name="Name" />
+            </div>
+            <div class="default-form-box">
+                <label>Descripción</label>
+                <input name="Description" />
+            </div>
+            <div class="default-form-box">
+                <label>Imagen</label>
+                <input type="hidden" id="ImageURL" name="ImageURL" />
+                <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+            </div>
+            <div class="form-group">
+                <label>¿Es destacado?</label>
+                <div class="input-group">
+                    <div class="radio form-control">
+                        <label><input name="isFeatured" type="radio" value="True" /> Si</label>
+                    </div>
+                    <div class="radio form-control">
+                        <label><input name="isFeatured" type="radio" value="False" /> No</label>
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
-                <img class="img-thumbnail" id="categoryImage" src="@imageURL" />
-            </div>
         </div>
+        <div class="col-md-4">
+            <img class="img-thumbnail" id="categoryImage" src="@imageURL" />
+        </div>
+    </div>
 
-        <button id="saveBtn" type="button" class="btn btn-default">Guardar</button>
-        <button id="cancelBtn" type="button" class="btn btn-default">Cancelar</button>
-    </form>
-</div>
+    <button id="saveBtn" type="button" class="btn btn-default">Guardar</button>
+    <button id="cancelBtn" type="button" class="btn btn-default">Cancelar</button>
+</form>
 
 <script>
     $("#imageUpload").change(function () {

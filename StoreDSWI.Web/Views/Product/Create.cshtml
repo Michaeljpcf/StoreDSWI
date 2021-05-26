@@ -1,6 +1,8 @@
 ﻿@model NewProductViewModel
 @{
     ViewBag.Title = "Create";
+
+    var imageURL = "/Content/images/system/placeholder-image.png";
 }
 
 <div class="row">
@@ -14,30 +16,43 @@
 </div>
 
 <form id="createProduct">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="default-form-box">
+                <label>Categoría</label>
+                <select name="CategoryID">
+                    @foreach (var category in Model.AvailableCategories)
+                    {
+                        <option value="@category.ID">@category.Name</option>
+                    }
+                </select>
+            </div>
 
-    <div class="default-form-box">
-        <label>Categoría</label>
-        <select name="CategoryID">
-            @foreach (var category in Model.AvailableCategories)
-            {
-                <option value="@category.ID">@category.Name</option>
-            }
-        </select>
-    </div>
+            <div class="default-form-box">
+                <label>Nombre</label>
+                <input name="Name" />
+            </div>
 
-    <div class="default-form-box">
-        <label>Nombre</label>
-        <input name="Name" />
-    </div>
+            <div class="default-form-box">
+                <label>Descripción</label>
+                <input name="Description" />
+            </div>
 
-    <div class="default-form-box">
-        <label>Descripción</label>
-        <input name="Description" />
-    </div>
+            <div class="default-form-box">
+                <label>Precio</label>
+                <input name="Price" />
+            </div>
 
-    <div class="default-form-box">
-        <label>Precio</label>
-        <input name="Price" />
+            <div class="default-form-box">
+                <label>Imagen</label>
+                <input type="hidden" id="ImageURL" name="ImageURL" />
+                <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <img class="img-thumbnail" id="productImage" src="@imageURL" />
+        </div>
     </div>
 
     <button class="btn btn-default" id="saveBtn" type="button">Guardar</button>
@@ -45,6 +60,36 @@
 </form>
 
 <script type="text/javascript">
+    $("#imageUpload").change(function () {
+        var element = this;
+		var formData = new FormData();
+		var totalFiles = element.files.length;
+
+		for (var i = 0; i < totalFiles; i++) {
+			var file = element.files[i];
+			formData.append("Photo", file);
+		}
+
+        $.ajax({
+            type: 'POST',
+			url: '@Url.Action("UploadImage", "Shared")',
+			dataType: 'json',
+			data: formData,
+			contentType: false,
+			processData: false
+        })
+        .done(function (response) {
+            console.log(response);
+
+            if (response.Success) {
+        		$("#ImageURL").val(response.ImageURL);
+                $("#productImage").attr("src", response.ImageURL);
+        	}
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FALLÓ");
+        });
+    });
     $("#saveBtn").click(function () {
 
         $.ajax({
