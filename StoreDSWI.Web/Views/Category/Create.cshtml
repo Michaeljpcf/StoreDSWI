@@ -50,6 +50,7 @@
         </div>
 
         <button id="saveBtn" type="button" class="btn btn-default">Guardar</button>
+        <button id="cancelBtn" type="button" class="btn btn-default">Cancelar</button>
     </form>
 </div>
 
@@ -66,7 +67,7 @@
 
         $.ajax({
             type: 'POST',
-			url: '/Shared/UploadImage',
+			url: '@Url.Action("UploadImage", "Shared")',
 			dataType: 'json',
 			data: formData,
 			contentType: false,
@@ -88,22 +89,30 @@
     $("#saveBtn").click(function () {
         $.ajax({
             type: 'POST',
-            url: '/Category/Create',
+            url: '@Url.Action("Create", "Category")',
             data: $("#createCategory").serialize()
         })
         .done(function (response) {
             console.log(response);
             $("#tableContainer").html(response);
             $("#actionContainer").html("");
+            focusAction("tableContainer");
+
             Swal.fire({
                 icon: 'success',
                 title: 'Categoría guardada!',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1000
             })
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FALLÓ");
         });
+    });
+
+    //
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
     });
 </script>

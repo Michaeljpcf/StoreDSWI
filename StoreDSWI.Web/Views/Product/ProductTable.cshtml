@@ -3,69 +3,156 @@
     ViewBag.Title = "ProductTable";
 }
 
-<form method="post">
+<link href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
-    <div class="input-group form-group">
-        <input class="form-control" id="searchTxt" name="Search" style="padding: 23px;" value="@Model.SearchTerm" />
-        <div class="input-group-btn">
-            <button type="button" class="btn btn-default" id="searchBtn">Buscar</button>
+<div class="col-md-12">
+    <form method="post">
+        <div class="col-md-8">
+            <div class="input-group form-group">
+                <input class="form-control" id="searchTxt" name="Search" style="padding: 23px;" value="@Model.SearchTerm" />
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default" id="searchBtn">Buscar</button>
+                </div>
+            </div>
         </div>
-    </div>
-</form>
-<button type="button" class="btn btn-primary text-uppercase" id="newBtn">Nuevo Producto</button>
-
-<div style="margin-top: 30px;">
-    <table class="table table-striped table-bordered text-center" style="font-size: 17px;">
-        <thead>
-            <tr>
-                <td>Nombre del Producto</td>
-                <td>Categoría</td>
-                <td>Precio</td>
-                <td>Accciones</td>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Products != null && Model.Products.Count > 0)
-            {
-                foreach (var product in Model.Products)
-                {
-                    <tr>
-                        <td>@product.Name</td>
-                        <td>
-                            @if (product.Category != null)
-                            {
-                                <text>@product.Category.Name</text>
-                            }
-                            else
-                            {
-                                <text>-</text>
-                            }
-                        </td>
-                        <td>S/. @product.Price</td>
-                        <td>
-                            <button class="editBtn btn btn-primary text-uppercase" style="margin-right: 15px;" data-id="@product.ID">Editar</button>
-                            <button class="deleteBtn btn btn-default text-uppercase" data-id="@product.ID">Eliminar</button>
-                            <button class="addtoCart btn btn-default text-uppercase" data-id="@product.ID">Agregar al carro</button>
-                        </td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <tr>
-                    <td class="text-danger" colspan="4">No se encontraron productos.</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        <div class="col-md-4">
+            <button type="button" class="btn btn-primary text-uppercase" id="resetBtn">Resetear</button>
+        </div>
+    </form>
+</div>
+<div class="col-md-12 mb-20" style="margin-bottom: 30px;">
+    <button type="button" class="btn btn-primary text-uppercase" id="newBtn">Nuevo Producto</button>
 </div>
 
+<table id="ProductsTable" class="table table-striped text-center" style="font-size: 17px;">
+    <thead>
+        <tr style="font-weight:700;">
+            <td>Nombre del Producto</td>
+            <td>Categoría</td>
+            <td>Precio</td>
+            <td>Accciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Products != null && Model.Products.Count > 0)
+        {
+            foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>
+                        @if (product.Category != null)
+                        {
+                            <text>@product.Category.Name</text>
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
+                    <td>S/. @product.Price</td>
+                    <td>
+                        <button class="editBtn btn btn-primary text-uppercase" style="margin-right: 15px;" data-id="@product.ID">Editar</button>
+                        <button class="deleteBtn btn btn-default text-uppercase" data-id="@product.ID">Eliminar</button>
+                        <button class="addtoCart btn btn-default text-uppercase" data-id="@product.ID">Agregar al carro</button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td class="text-danger" colspan="4">No se encontraron productos.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*<div>
+    @if (Model.PageNo != 1)
+    {
+        <button class="btn btn-default pageButtons" data-pageNo="@(Model.PageNo - 1)"><</button>
+    }
+    <button class="btn btn-default pageButtons" data-pageNo="@(Model.PageNo + 1)">></button>
+</div>*@
+
 <script type="text/javascript">
+
+    $('#ProductsTable').DataTable({
+
+        "deferRender": true,
+        "retrieve": true,
+        "processing": true,
+        "pageLength" : 5,
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sSearch": "Buscar:",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        }
+
+    });
+
+    $(".pageButtons").click(function () {
+        $.ajax({
+            url: '@Url.Action("ProductTable", "Product")',//'/Product/ProductTable',
+            data: {
+                pageNo : $(this).attr("data-pageNo")
+            }
+        })
+        .done(function (response) {
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FALLÓ");
+        });
+    });
+
+    //
     $("#searchBtn").click(function () {
         var searchValue = $("#searchTxt").val();
 
         $.ajax({
-            url: '/Product/ProductTable',
+            url: '@Url.Action("ProductTable", "Product")',
+            data: {
+                search: searchValue
+            }
+        })
+            .done(function (response) {
+                $("#tableContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FALLÓ");
+            });
+    });
+
+    //
+    $("#resetBtn").click(function () {
+        var searchValue = '';
+
+        $.ajax({
+            url: '@Url.Action("ProductTable", "Product")',
             data: {
                 search: searchValue
             }
@@ -81,12 +168,12 @@
     //
     $("#newBtn").click(function () {
         $.ajax({
-            url: '/Product/Create'
+            url: '@Url.Action("Create", "Product")',
         })
             .done(function (response) {
                 $("#actionContainer").html(response);
 
-                focusAction();
+                focusAction("actionContainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FALLÓ");
@@ -96,7 +183,7 @@
     //
     $(".editBtn").click(function () {
         $.ajax({
-            url: '/Product/Edit',
+            url: '@Url.Action("Edit", "Product")',
             data: {
                 ID: $(this).attr('data-id')
             }
@@ -104,7 +191,7 @@
             .done(function (response) {
                 $("#actionContainer").html(response);
 
-                focusAction();
+                focusAction("actionContainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FALLÓ");
@@ -114,7 +201,7 @@
     //
     $(".deleteBtn").click(function () {
 
-        Swal.fire({            
+        Swal.fire({
             title: "Eliminar Producto",
             text: "¿Estas seguro de eliminar el Producto?",
             icon: "warning",
@@ -128,13 +215,13 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: 'POST',
-                    url: '/Product/Delete',
+                    url: '@Url.Action("Delete", "Product")',
                     data: {
                         ID: $(this).attr('data-id')
                     }
                 })
                 .done(function (response) {
-                    $("#tableContainer").html(response);                    
+                    $("#tableContainer").html(response);
                     Swal.fire(
                         'Eliminado!',
                         'El producto a sido eliminado!',
@@ -158,11 +245,5 @@
         $.cookie('CartProducts', products.join('-'), { path: '/' });
         alert("Producto agregado al carro");
 
-    });
-
-    function focusAction() {
-        $('html, body').animate({
-            scrollTop: $("#actionContainer").offset().top - 100
-        }, 1000);
-    }
+    });    
 </script>

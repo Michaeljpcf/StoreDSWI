@@ -1,20 +1,29 @@
 ﻿@model CategorySearchViewModel
 
 
-<form method="post">
-    <div class="input-group form-group">
-        <input class="form-control" id="searchTxt" name="Search" style="padding: 23px;" />
-        <div class="input-group-btn">
-            <button type="button" class="btn btn-default" id="searchBtn">Buscar</button>
+<div class="col-md-12">
+    <form method="post">
+        <div class="col-md-8">
+            <div class="input-group form-group">
+                <input class="form-control" id="searchTxt" name="Search" style="padding: 23px;" />
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default" id="searchBtn">Buscar</button>
+                </div>
+            </div>
         </div>
-    </div>
-</form>
-<button type="button" class="btn btn-primary text-uppercase" id="newBtn">Nueva Categoría</button>
+        <div class="col-md-4">
+            <button type="button" class="btn btn-primary text-uppercase" id="resetBtn">Resetear</button>
+        </div>
+    </form>
+</div>
+<div class="col-md-12 mb-20" style="margin-bottom: 30px;">
+    <button type="button" class="btn btn-primary text-uppercase" id="newBtn">Nueva Categoría</button>
+</div>
 
 <div style="margin-top: 30px;">
     <table class="table table-striped table-bordered text-center" style="font-size: 17px;">
         <thead>
-            <tr>
+            <tr style="font-weight:700;">
                 <td>Nombre Categoría</td>
                 <td>Cantidad Productos</td>
                 <td>Accciones</td>
@@ -50,7 +59,7 @@
         var searchValue = $("#searchTxt").val();
 
         $.ajax({
-            url: '/Category/CategoryTable',
+            url: '@Url.Action("CategoryTable", "Category")',
             data: {
                 search: searchValue
             }
@@ -62,15 +71,34 @@
             alert("FALLÓ");
         });
     });
+
+    //
+    $("#resetBtn").click(function () {
+        var searchValue = '';
+
+        $.ajax({
+            url: '@Url.Action("CategoryTable", "Category")',
+            data: {
+                search: searchValue
+            }
+        })
+        .done(function (response) {
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FALLÓ");
+        });
+    });
+
     //
     $("#newBtn").click(function () {
         $.ajax({
-            url: '/Category/Create',
+            url: '@Url.Action("Create", "Category")',
         })
         .done(function (response) {
             $("#actionContainer").html(response);
 
-            focusAction();
+            focusAction("actionContainer");
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FALLÓ");
@@ -79,7 +107,7 @@
     //
     $(".editBtn").click(function () {
         $.ajax({
-            url: '/Category/Edit',
+            url: '@Url.Action("Edit", "Category")',
             data: {
                 ID: $(this).attr('data-id')
             }
@@ -87,7 +115,7 @@
         .done(function (response) {
             $("#actionContainer").html(response);
 
-            focusAction();
+            focusAction("actionContainer");
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FALLÓ");
@@ -96,7 +124,7 @@
     //
     $(".deleteBtn").click(function () {
 
-        Swal.fire({            
+        Swal.fire({
             title: "Eliminar Categoría",
             text: "¿Está seguro de que desea eliminar esta categoría?",
             icon: "warning",
@@ -110,13 +138,13 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: 'POST',
-                    url: '/Category/Delete',
+                    url: '@Url.Action("Delete", "Category")',
                     data: {
                         ID: $(this).attr('data-id')
                     }
                 })
                 .done(function (response) {
-                    $("#tableContainer").html(response);                    
+                    $("#tableContainer").html(response);
                     Swal.fire(
                         'Eliminado!',
                         'La categoría a sido eliminada!',
@@ -128,13 +156,7 @@
                 });
             }
         });
-    });
-
-    function focusAction() {
-        $('html, body').animate({
-            scrollTop: $("#actionContainer").offset().top - 100
-        }, 1000);
-    }
+    });    
 </script>
 
 

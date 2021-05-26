@@ -12,12 +12,9 @@ namespace StoreDSWI.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        CategoriesService categoryService = new CategoriesService();
-
         [HttpGet]
         public ActionResult Index()
         {
-            //var categories = categoryService.GetCategories();
             return View();
         }
 
@@ -25,7 +22,7 @@ namespace StoreDSWI.Web.Controllers
         {
             CategorySearchViewModel model = new CategorySearchViewModel();
 
-            model.Categories = categoryService.GetCategories();
+            model.Categories = CategoriesService.Instance.GetCategories();
 
             if (!string.IsNullOrEmpty(search))
             {
@@ -37,6 +34,7 @@ namespace StoreDSWI.Web.Controllers
         }
 
         //CREAR
+        #region Creation
         [HttpGet]
         public ActionResult Create()
         {
@@ -53,17 +51,19 @@ namespace StoreDSWI.Web.Controllers
             newCategory.Description = model.Description;
             newCategory.ImageURL = model.ImageURL;
             newCategory.isFeatured = model.isFeatured;
-            categoryService.SaveCategory(newCategory);
+            CategoriesService.Instance.SaveCategory(newCategory);
 
             return RedirectToAction("CategoryTable");
         }
+        #endregion
 
         //EDITAR
+        #region Updation
         [HttpGet]
         public ActionResult Edit(int ID)
         {
             EditCategoryViewModel model = new EditCategoryViewModel();
-            var category = categoryService.GetCategory(ID);
+            var category = CategoriesService.Instance.GetCategory(ID);
             model.ID = category.ID;
             model.Name = category.Name;
             model.Description = category.Description;
@@ -76,27 +76,21 @@ namespace StoreDSWI.Web.Controllers
         [HttpPost]
         public ActionResult Edit(EditCategoryViewModel model)
         {
-            var existingCategory = categoryService.GetCategory(model.ID);
+            var existingCategory = CategoriesService.Instance.GetCategory(model.ID);
             existingCategory.Name = model.Name;
             existingCategory.Description = model.Description;
             existingCategory.ImageURL = model.ImageURL;
             existingCategory.isFeatured = model.isFeatured;
-            categoryService.UpdateCategory(existingCategory);
+            CategoriesService.Instance.UpdateCategory(existingCategory);
             return RedirectToAction("CategoryTable");
         }
+        #endregion
 
         //ELIMINAR
-        //[HttpGet]
-        //public ActionResult Delete(int ID)
-        //{
-        //    var category = categoryService.GetCategory(ID);
-        //    return View(category);
-        //}
-
         [HttpPost]
         public ActionResult Delete(int ID)
         {
-            categoryService.DeleteCategory(ID);
+            CategoriesService.Instance.DeleteCategory(ID);
             return RedirectToAction("CategoryTable");
         }
     }

@@ -44,27 +44,36 @@
     </div>
 
     <button class="btn btn-default" id="updateBtn" type="button">Actualizar</button>
+    <button id="cancelBtn" type="button" class="btn btn-default">Cancelar</button>
 </form>
 
 <script>
     $("#updateBtn").click(function () {
         $.ajax({
             type: 'POST',
-            url: '/Product/Edit',
+            url: '@Url.Action("Edit", "Product")',
             data: $("#editProduct").serialize()
         })
         .done(function (response) {
             $("#tableContainer").html(response);
             $("#actionContainer").html("");
+            focusAction("tableContainer");
+
             Swal.fire({
                 icon: 'success',
                 title: 'Producto actualizado!',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1000
             })
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FALLÓ");
         });
+    });
+
+    //
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
     });
 </script>

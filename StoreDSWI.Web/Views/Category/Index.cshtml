@@ -3,7 +3,7 @@
     ViewBag.Title = "Categories";
 }
 
-<section class="flat-row flat-iconbox">
+<section>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -26,3 +26,11 @@
         </div>
     </div>
 </section>
+
+<script>
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().top - 125
+        }, 1000);
+    }
+</script>

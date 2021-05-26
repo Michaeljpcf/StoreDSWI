@@ -14,6 +14,12 @@ namespace StoreDSWI.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "TodaslasCategorias",
+                url: "categoria/tabla",
+                defaults: new { controller = "Category", action = "CategoryTable" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

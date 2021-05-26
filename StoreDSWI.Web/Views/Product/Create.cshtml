@@ -41,6 +41,7 @@
     </div>
 
     <button class="btn btn-default" id="saveBtn" type="button">Guardar</button>
+    <button id="cancelBtn" type="button" class="btn btn-default">Cancelar</button>
 </form>
 
 <script type="text/javascript">
@@ -48,21 +49,29 @@
 
         $.ajax({
             type: 'POST',
-            url: '/Product/Create',
+            url: '@Url.Action("Create", "Product")',
             data: $("#createProduct").serialize()
         })
         .done(function (response) {
             $("#tableContainer").html(response);
-            $("#actionContainer").html("");    
+            $("#actionContainer").html("");
+            focusAction("tableContainer");
+
             Swal.fire({
               icon: 'success',
               title: 'Producto guardado!',
               showConfirmButton: false,
-              timer: 1500
+              timer: 1000
             })
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FALLÓ");
         });
+    });
+
+    //
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
     });
 </script>

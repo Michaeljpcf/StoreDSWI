@@ -53,6 +53,7 @@
     </div>
 
     <button id="updateBtn" type="button" class="btn btn-default">Actualizar</button>
+    <button id="cancelBtn" type="button" class="btn btn-default">Cancelar</button>
 </form>
 
 <script>
@@ -67,7 +68,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: '/Shared/UploadImage',
+            url: '@Url.Action("UploadImage", "Shared")',
             dataType: 'json',
             data: formData,
             contentType: false,
@@ -88,21 +89,29 @@
     $("#updateBtn").click(function () {
         $.ajax({
             type: 'POST',
-            url: '/Category/Edit',
+            url: '@Url.Action("Edit", "Category")',
             data: $("#editCategory").serialize()
         })
         .done(function (response) {
             $("#tableContainer").html(response);
             $("#actionContainer").html("");
+            focusAction("tableContainer");
+
             Swal.fire({
                 icon: 'success',
                 title: 'Categoría actualizada!',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1000
             })
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FALLÓ");
         });
+    });
+
+    //
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
     });
 </script>
