@@ -20,41 +20,81 @@
     <button type="button" class="btn btn-primary text-uppercase" id="newBtn">Nueva Categoría</button>
 </div>
 
-<div style="margin-top: 30px;">
-    <table class="table table-striped table-bordered text-center" style="font-size: 17px;">
-        <thead>
-            <tr style="font-weight:700;">
-                <td>Nombre Categoría</td>
-                <td>Cantidad Productos</td>
-                <td>Accciones</td>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Categories != null && Model.Categories.Count > 0)
+
+<table class="table table-striped table-bordered text-center" style="font-size: 17px;">
+    <thead>
+        <tr style="font-weight:700;">
+            <td>Nombre Categoría</td>
+            <td>Cantidad Productos</td>
+            <td>Accciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Categories != null && Model.Categories.Count > 0)
+        {
+            foreach (var category in Model.Categories)
             {
-                foreach (var category in Model.Categories)
-                {
-                    <tr>
-                        <td>@category.Name</td>
-                        <td>
-                            @category.Products.Count
-                        </td>
-                        <td>
-                            <button class="editBtn btn btn-primary text-uppercase" style="margin-right: 15px;" data-id="@category.ID">Editar</button>
-                            <button class="deleteBtn btn btn-default text-uppercase" data-id="@category.ID">Eliminar</button>
-                        </td>
-                    </tr>
-                }
+                <tr>
+                    <td>@category.Name</td>
+                    <td>
+                        @category.Products.Count
+                    </td>
+                    <td>
+                        <button class="editBtn btn btn-primary text-uppercase" style="margin-right: 15px;" data-id="@category.ID">Editar</button>
+                        <button class="deleteBtn btn btn-default text-uppercase" data-id="@category.ID">Eliminar</button>
+                    </td>
+                </tr>
             }
-            else
-            {
-                <tr><td colspan="3" class="text-danger">No se encontraron categorías.</td></tr>
-            }
-        </tbody>
-    </table>
+        }
+        else
+        {
+            <tr><td colspan="3" class="text-danger">No se encontraron categorías.</td></tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    @if (Model.Pager != null)
+    {
+        if (Model.Pager.CurrentPage > 1)
+        {
+            <button class="btn btn-default pageButtons" data-pageno="1">Primero</button>
+            <button class="btn btn-default pageButtons" data-pageno="@(Model.Pager.CurrentPage -1)">Anterior</button>
+        }
+
+        for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+        {
+            string activeClass = Model.Pager.CurrentPage == page ? "active" : string.Empty;
+
+            <button class="btn btn-default @activeClass pageButtons" data-pageno="@page">@page</button>
+        }
+
+        if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+        {
+            <button class="btn btn-default pageButtons" data-pageno="@(Model.Pager.CurrentPage + 1)">Siguiente</button>
+            <button class="btn btn-default pageButtons" data-pageno="@Model.Pager.EndPage">Último</button>
+        }
+    }
 </div>
 
-<script>
+
+<script type="text/javascript">
+
+    $(".pageButtons").click(function () {
+        $.ajax({
+            url: '@Url.Action("CategoryTable", "Category")',
+            data: {
+                pageNo: $(this).attr("data-pageNo")
+            }
+        })
+        .done(function (response) {
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FALLÓ");
+        });
+    });
+
     $("#searchBtn").click(function () {
         var searchValue = $("#searchTxt").val();
 
@@ -156,7 +196,7 @@
                 });
             }
         });
-    });    
+    });
 </script>
 
 

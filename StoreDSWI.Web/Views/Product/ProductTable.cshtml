@@ -3,9 +3,6 @@
     ViewBag.Title = "ProductTable";
 }
 
-<link href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-
 <div class="col-md-12">
     <form method="post">
         <div class="col-md-8">
@@ -25,7 +22,7 @@
     <button type="button" class="btn btn-primary text-uppercase" id="newBtn">Nuevo Producto</button>
 </div>
 
-<table id="ProductsTable" class="table table-striped text-center" style="font-size: 17px;">
+<table class="table table-striped text-center" style="font-size: 17px;">
     <thead>
         <tr style="font-weight:700;">
             <td>Nombre del Producto</td>
@@ -69,50 +66,15 @@
     </tbody>
 </table>
 
-@*<div>
+<div>
     @if (Model.PageNo != 1)
     {
-        <button class="btn btn-default pageButtons" data-pageNo="@(Model.PageNo - 1)"><</button>
+        <button class="btn btn-default pageButtons" data-pageNo="@(Model.PageNo - 1)">Anterior</button>
     }
-    <button class="btn btn-default pageButtons" data-pageNo="@(Model.PageNo + 1)">></button>
-</div>*@
+    <button class="btn btn-default pageButtons" data-pageNo="@(Model.PageNo + 1)">Siguiente</button>
+</div>
 
-<script type="text/javascript">
-
-    $('#ProductsTable').DataTable({
-
-        "deferRender": true,
-        "retrieve": true,
-        "processing": true,
-        "pageLength" : 5,
-        "language": {
-            "sProcessing": "Procesando...",
-            "sLengthMenu": "Mostrar _MENU_ registros",
-            "sZeroRecords": "No se encontraron resultados",
-            "sEmptyTable": "Ningún dato disponible en esta tabla",
-            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-            "sSearch": "Buscar:",
-            "sInfoThousands": ",",
-            "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "oAria": {
-                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            },
-            "buttons": {
-                "copy": "Copiar",
-                "colvis": "Visibilidad"
-            }
-        }
-
-    });
+<script type="text/javascript">    
 
     $(".pageButtons").click(function () {
         $.ajax({

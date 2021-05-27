@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 //
+using System.Data.Entity;
 using StoreDSWI.Entities;
 using StoreDSWI.Services;
 using StoreDSWI.Web.ViewModels;
@@ -18,19 +19,25 @@ namespace StoreDSWI.Web.Controllers
             return View();
         }
 
-        public ActionResult CategoryTable(string search)
+        public ActionResult CategoryTable(string search, int? pageNo)
         {
             CategorySearchViewModel model = new CategorySearchViewModel();
+            model.SearchTerm = search;
 
-            model.Categories = CategoriesService.Instance.GetCategories();
+            pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+            var totalRecords = CategoriesService.Instance.GetCategoriesCount(search);
+            model.Categories = CategoriesService.Instance.GetCategories(search, pageNo.Value);
 
-            if (!string.IsNullOrEmpty(search))
+            if (model.Categories != null)
             {
-                model.SearchTerm = search;
-                model.Categories = model.Categories.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+                model.Pager = new Pager(totalRecords, pageNo, 3);
+                
+                return PartialView("_CategoryTable", model);
             }
-
-            return PartialView("_CategoryTable", model);
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         //CREAR
@@ -93,5 +100,12 @@ namespace StoreDSWI.Web.Controllers
             CategoriesService.Instance.DeleteCategory(ID);
             return RedirectToAction("CategoryTable");
         }
+
+        public ActionResult GetMainCategories()
+        {
+            var categories = CategoriesService.Instance.GetAllCategories();
+            return PartialView(categories);
+        }
+
     }
 }
