@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="default-form-box">
-                <label>Nombre</label>
+                <label>Nombre <span class="text-danger">*</span></label>
                 <input name="Name" value="@Model.Name" />
             </div>
             <div class="default-form-box">
@@ -85,28 +85,65 @@
             alert("FALLÓ");
         });
     });
-    //
-    $("#updateBtn").click(function () {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("Edit", "Category")',
-            data: $("#editCategory").serialize()
-        })
-        .done(function (response) {
-            $("#tableContainer").html(response);
-            $("#actionContainer").html("");
-            focusAction("tableContainer");
 
-            Swal.fire({
-                icon: 'success',
-                title: 'Categoría actualizada!',
-                showConfirmButton: false,
-                timer: 1000
+    //
+    $('#editCategory').validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            Description: {
+                maxlength: 500
+            }
+        },
+        messages: {
+            Name: {
+                required: 'El nombre es obligatorio',
+                minlength: 'El nombre debe tener mínimo 5 letras',
+                maxlength: 'El nombre debe tener máximo 50 letras'
+            },
+            Description: {
+                maxlength: 'La descripción debe tener máximo 500 letras'
+            }
+        }
+    });
+    $("#updateBtn").click(function () {
+        if ($("#editCategory").valid()) {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Edit", "Category")',
+                data: $("#editCategory").serialize()
             })
-        })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("FALLÓ");
-        });
+            .done(function (response) {
+                $("#tableContainer").html(response);
+                $("#actionContainer").html("");
+                focusAction("tableContainer");
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Categoría actualizada!',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Advertencia',
+                    text: 'Debe llenar los campos requeridos *',
+                });
+            });
+        }
+        else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Advertencia',
+                text: 'Debe llenar los campos requeridos *',
+            });
+        }
     });
 
     //

@@ -10,7 +10,8 @@ namespace StoreDSWI.Entities
 {
     public class Product : BaseEntity
     {
-        [Range(1,1000000)]
+        [RegularExpression(@"^\d+.\d{0,2}$")]
+        [Range(1, 9999.99)]
         public decimal Price { get; set; }
         public virtual Category Category { get; set; }
         public string ImageURL { get; set; }

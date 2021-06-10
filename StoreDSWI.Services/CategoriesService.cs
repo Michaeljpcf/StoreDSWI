@@ -69,7 +69,8 @@ namespace StoreDSWI.Services
                 {
                     return context.Categories.Where(category => category.Name != null && 
                         category.Name.ToLower().Contains(search.ToLower()))
-                        .OrderBy(x => x.ID).Skip((pageNo - 1) * pageSize)
+                        .OrderBy(x => x.ID)
+                        .Skip((pageNo - 1) * pageSize)
                         .Take(pageSize)
                         .Include(x => x.Products)
                         .ToList();

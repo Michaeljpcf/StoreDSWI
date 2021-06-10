@@ -29,7 +29,7 @@
             </div>
 
             <div class="default-form-box">
-                <label>Nombre</label>
+                <label>Nombre <span class="text-danger">*</span></label>
                 <input name="Name" />
             </div>
 
@@ -39,7 +39,7 @@
             </div>
 
             <div class="default-form-box">
-                <label>Precio</label>
+                <label>Precio <span class="text-danger">*</span></label>
                 <input name="Price" />
             </div>
 
@@ -90,28 +90,75 @@
             alert("FALLÓ");
         });
     });
+    //
+
+    $('#createProduct').validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            Description: {
+                maxlength: 500
+            },
+            Price: {
+                required: true,
+                number: true
+            }
+        },
+        messages: {
+            Name: {
+                required: 'El nombre es obligatorio',
+                minlength: 'El nombre debe tener mínimo 5 letras',
+                maxlength: 'El nombre debe tener máximo 50 letras'
+            },
+            Description: {
+                maxlength: 'La descripción debe tener máximo 500 letras'
+            },
+            Price: {
+                required: 'El precio es obligatorio',
+                number: 'No puede llevar comas ni terminar en punto. ejm: 100.00 ó 100'
+            }
+        }
+    });
+
     $("#saveBtn").click(function () {
+        if ($("#createProduct").valid()) {
 
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("Create", "Product")',
-            data: $("#createProduct").serialize()
-        })
-        .done(function (response) {
-            $("#tableContainer").html(response);
-            $("#actionContainer").html("");
-            focusAction("tableContainer");
-
-            Swal.fire({
-              icon: 'success',
-              title: 'Producto guardado!',
-              showConfirmButton: false,
-              timer: 1000
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create", "Product")',
+                data: $("#createProduct").serialize()
             })
-        })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("FALLÓ");
-        });
+            .done(function (response) {
+                $("#tableContainer").html(response);
+                $("#actionContainer").html("");
+                focusAction("tableContainer");
+
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Producto guardado!',
+                  showConfirmButton: false,
+                  timer: 1000
+                })
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Advertencia',
+                    text: 'Debe llenar los campos requeridos *',
+                });
+                //alert("FALLÓ");
+            });
+        }
+        else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Advertencia',
+                text: 'Debe llenar los campos requeridos *',
+            });
+        }
     });
 
     //
