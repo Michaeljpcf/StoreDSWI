@@ -8,6 +8,10 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
     cursor: pointer;
 }
 
+li{
+    list-style:none;
+}
+
 .btn-default.active {
     color: #fff;
     background-color: #0280E1;
@@ -26,6 +30,11 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
         padding-left: 4px;
         padding-right: 4px;
     }
+
+
+.single-top-right {
+    padding-left: 5em !important;
+} 
 
 .row {
     margin-left: 4px;
@@ -125,10 +134,11 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
 SWIPER DE PRODUCTOS
 =========================================*/
 .swiper-slide {
-    border: 1px solid #eee;
+    border: 1px solid #ddd;
 }
 .productos {
-    padding-top: 30px!important;
+    padding-top: 30px !important;
+    margin-bottom: 50px;
     width: 100%;
 }
 
@@ -153,6 +163,7 @@ SWIPER DE PRODUCTOS
 
 .producto-imagen {
     padding: 8px;
+    height: 220px;
 }
 
     .producto-imagen img {
@@ -163,7 +174,7 @@ SWIPER DE PRODUCTOS
 
 .producto-info {
     background: #fff;
-    padding: 8px 8px 12px 8px;
+    padding: 8px 8px 12px 12px;
     height: 120px;
 }
 
@@ -182,14 +193,14 @@ SWIPER DE PRODUCTOS
     display: inline-block;
 }
 
-.descuento {
+.new {
     display: inline-block;
     font-size: 15px;
     color: #F00;
     font-weight: 700;
 }
 
-.oferta {
+.Precio {
     font-size: 18px;
     font-weight: 700;
     color: #000;
@@ -342,4 +353,60 @@ SECTION BANNERS
     display: block;
     max-width: 100%;
     height: auto;
+}
+
+/*===================================
+    - Breadvrumb  
+=================================*/
+.breadcrumb-area {
+    background-color: #fcf6f6;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-bottom-width: 0px;
+    padding-top: 110px;
+    padding-bottom: 117px;
+    background-size: cover;
+    line-height: 1;
+}
+
+@media only screen and (max-width: 767px), only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 992px) and (max-width: 1199px) {
+    .breadcrumb-area {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .breadcrumb-area {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+}
+
+.breadcrumb-area .breadcrumb-title {
+    font-weight: 400;
+    text-transform: capitalize;
+    font-size: 48px;
+    color: #3c3c3c;
+    margin: 0;
+}
+
+@media only screen and (max-width: 767px) {
+    .breadcrumb-area .breadcrumb-title {
+        font-size: 36px;
+    }
+}
+
+.breadcrumb-area .breadcrumb-title {
+    font-weight: 400;
+    text-transform: capitalize;
+    font-size: 48px;
+    color: #3c3c3c;
+    margin: 0;
+}
+
+@media only screen and (max-width: 767px) {
+    .breadcrumb-area .breadcrumb-title {
+        font-size: 36px;
+    }
 }

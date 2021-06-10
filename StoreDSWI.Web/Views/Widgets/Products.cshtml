@@ -1,0 +1,36 @@
+﻿@model ProductsWidgetViewModels
+
+@{
+
+    var defaultImageURL = "/Content/images/system/placeholder-image.png";
+}
+
+@if (Model != null && Model.Products != null)
+{
+    <div class="swiper-wrapper">
+
+        @foreach (var product in Model.Products)
+        {
+            var imageURL = string.IsNullOrEmpty(product.ImageURL) ? defaultImageURL : product.ImageURL;
+
+            <div class="swiper-slide">
+                <div class="producto-imagen">
+                    <a href="@Url.Action("Details", "Product", new { ID = product.ID })" class="pixelProducto">
+                        <img src="@imageURL" class="img-responsive" />
+                    </a>
+                </div>
+
+                <div class="producto-info">
+                    <div class="nombre">@product.Name</div>
+                    @if (Model.IsLatestProducts)
+                    {
+                        <div class="new">Nuevo</div>
+                    }
+                    <div class="precio">S/ @product.Price</div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+}

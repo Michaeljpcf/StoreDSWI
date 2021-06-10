@@ -118,5 +118,16 @@ namespace StoreDSWI.Web.Controllers
             ProductsService.Instance.DeleteProduct(ID);
             return RedirectToAction("ProductTable");
         }
+
+        //DETALLES
+        [HttpGet]
+        public ActionResult Details(int ID)
+        {
+            ProductViewModel model = new ProductViewModel();
+
+            model.Product = ProductsService.Instance.GetProduct(ID);
+
+            return View(model);
+        }
     }
 }

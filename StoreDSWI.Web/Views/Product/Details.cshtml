@@ -1,0 +1,87 @@
+﻿@model ProductViewModel
+
+@if (Model != null && Model.Product != null)
+{
+    var defaultImageURL = "/Content/images/system/placeholder-image.png";
+    var imageURL = string.IsNullOrEmpty(Model.Product.ImageURL) ? defaultImageURL : Model.Product.ImageURL;
+
+    <!-- breadcrumb-area start -->
+    <div class="breadcrumb-area">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-12 text-center">
+                    <h2 class="breadcrumb-title">@Model.Product.Name</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb-area end -->
+
+    <!-- products -->
+    <div class="products">
+        <div class="container">
+            <div class="single-page">
+                <div class="single-page-row" id="detail-21">
+                    <div class="col-md-6 single-top-left">
+                        <div class="flexslider">
+                            <ul class="slides">
+                                <li>
+                                    <div class="thumb-image detail_images"> <img src="@imageURL" data-imagezoom="true" class="img-responsive" alt=""> </div>
+                                </li>
+
+
+                                @*<li data-thumb="images/s2.jpg">
+                                        <div class="thumb-image"> <img src="images/s2.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
+                                    </li>
+                                    <li data-thumb="images/s3.jpg">
+                                        <div class="thumb-image"> <img src="images/s3.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
+                                    </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 single-top-right">
+                        <h3 class="item_name">@Model.Product.Name</h3>
+                        <p>Tiempo de procesamiento: el artículo se enviará dentro de 2-3 días hábiles.</p>
+                        @*<div class="single-rating">
+                                <ul>
+                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li class="rating">20 valoraciones</li>
+                                    <li><a href="#">Agrega tu evaluación</a></li>
+                                </ul>
+                            </div>*@
+                        <div class="single-price">
+                            <ul>
+                                <li>S/ @Model.Product.Price</li>
+                            </ul>
+                        </div>
+                        <p class="single-price-text">@Model.Product.Description</p>
+                        <form action="#" method="post">
+                            <input type="hidden" name="cmd" value="_cart" />
+                            <input type="hidden" name="add" value="1" />
+                            <input type="hidden" name="w3ls_item" value="Snow Blower" />
+                            <input type="hidden" name="amount" value="540.00" />
+                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Agregar al carro</button>
+                        </form>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--//products-->
+
+    <div class="swiper-container productos">
+        <div class="section-titulo">
+            <h3 class="w3ls-title">Productos relacionados</h3>
+        </div>
+
+        @{Html.RenderAction("Products", "Widgets", new { isLastestProducts = false, CategoryID = Model.Product.Category.ID });}
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+}

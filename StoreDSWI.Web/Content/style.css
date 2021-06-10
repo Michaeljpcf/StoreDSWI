@@ -2011,7 +2011,7 @@ h5.sitemap-text-title {
     color: #0280e1;
 }
 .single-top-right {
-    padding-left: 5em;
+    padding-left: 5em!important;
 }  
 .single-rating {
     margin: 1em 0;
