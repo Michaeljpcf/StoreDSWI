@@ -1111,7 +1111,7 @@ p {
 }
 .product-top li.dropdown{
     display: inline-block;
-    float: right;
+    /*float: right;*/
 	margin-left: 2em;
 } 
 .product-top h4 {
@@ -1134,23 +1134,14 @@ p {
 .product-grids {
     margin-top: 3em;
 }
-.agile-products {
-    padding: 1.5em;
-    border: 1px solid #e4e4e4;
-	position: relative;
-    overflow: hidden;
-	-webkit-transition:.5s all;
-	-moz-transition:.5s all;
-	-o-transition:.5s all;
-	-ms-transition:.5s all;
-	transition:.5s all;
-}
-.agile-product-text h5{ 
+.agile-product-text h5 {
     font-size: 1em;
     line-height: 1.8em;
     font-family: 'Offside', cursive;
-	margin-top: 1em;
+    margin-top: 1em;
     text-transform: capitalize;
+    height: 48px;
+    overflow: hidden;
 }
 .agile-product-text h5 a {
     color: #0280e1; 
@@ -3235,7 +3226,7 @@ nav.sitemap-tabs.affix div#myNavbar {
         font-size: 1.1em; 
     }
     .product-top { 
-        padding: 0.5em 2em;
+        padding: 0.5em 3em;
     }
     .services-grids i.fa {
         font-size: 1.5em; 

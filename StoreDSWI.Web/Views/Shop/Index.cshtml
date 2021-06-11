@@ -1,0 +1,257 @@
+﻿@using StoreDSWI.Web.Code
+@model ShopViewModels
+@{
+    ViewBag.Title = "Index";
+
+    var defaultImageURL = "/Content/images/system/placeholder-image.png";
+}
+
+
+<!-- breadcrumb-area start -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-12 text-center">
+                <h2 class="breadcrumb-title">PRODUCTOS</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb-area end -->
+
+<!--========================================>
+LISTAR PRODUCTOS
+==========================================-->
+<!-- products -->
+<div class="products">
+    <div class="container">
+        <div class="col-md-9 product-w3ls-right">
+            <div class="product-top">
+                <ul>
+                    <li class="dropdown head-dpdn">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filtrar por:<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Index","Shop", new { sortBy = (int)SortByEnums.Default })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Default ? "active" : string.Empty : string.Empty)">Predeterminado - lo más nuevo</a></li>
+                            <li><a href="@Url.Action("Index","Shop", new { sortBy = (int)SortByEnums.Popularity })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Popularity ? "active" : string.Empty : string.Empty)">Populares</a></li>
+                            <li><a href="@Url.Action("Index","Shop", new { sortBy = (int)SortByEnums.PriceLowToHigh })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceLowToHigh ? "active" : string.Empty : string.Empty)">Menor - Mayor precio</a></li>
+                            <li><a href="@Url.Action("Index","Shop", new { sortBy = (int)SortByEnums.PriceHighToLow })" class="@(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceHighToLow ? "active" : string.Empty : string.Empty)">Mayor - Menor precio</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="clearfix"> </div>
+            </div>
+
+
+            <div class="products-row">
+
+                @foreach (var product in Model.Products)
+                {
+                    var imageURL = string.IsNullOrEmpty(product.ImageURL) ? defaultImageURL : product.ImageURL;
+
+                    <div class="col-md-3 product-grids">
+                        <div class="agile-products">
+                            <a href="@Url.Action("Details", "Product", new { ID = product.ID })"><img src="@imageURL" class="img-responsive" alt="img"></a>
+                            <div class="agile-product-text">
+                                <h5><a href="single.html">@product.Name</a></h5>
+                                <h6>S/ @product.Price</h6>
+                                <form action="#" method="post">
+                                    <input type="hidden" name="cmd" value="_cart" />
+                                    <input type="hidden" name="add" value="1" />
+                                    <input type="hidden" name="w3ls_item" value="Audio speaker" />
+                                    <input type="hidden" name="amount" value="100.00" />
+                                    <button type="submit" class="w3ls-cart pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Agregar al carro</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="clearfix"> </div>
+            </div>
+            <div class="product-pagination text-center clearfix">
+                <ul class="flat-pagination">
+                    <li class="prev">
+                        <a href="#"><i class="fa fa-angle-left"></i></a>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#" title="">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                </ul><!-- /.flat-pagination -->
+            </div>
+        </div>
+        <div class="col-md-3 rsidebar">
+            <div class="related-row">
+                <h4>Categorias destacadas</h4>
+                <ul>
+                    @foreach (var category in Model.FeaturedCategories)
+                    {
+                        <li><a href="@Url.Action("Index","Shop", new { categoryID = category.ID })">@category.Name</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<!--//products-->
+@*<div class="row">
+        <div class="col-md-3">
+            <div class="sidebar slidebar-shop">
+                <div class="widget widget-sort-by">
+                    <h5 class="widget-title">
+                        Sort By
+                    </h5>
+                    <ul>
+                        <li><a href="#" class="active">Default</a></li>
+                        <li><a href="#">Popularity</a></li>
+                        <li><a href="#">Average rating</a></li>
+                        <li><a href="#">Newness</a></li>
+                        <li><a href="#">Price: low to high</a></li>
+                        <li><a href="#">Price: high to low</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="products-container">
+                <div class="product-item-container">
+                    <div class="product-item">
+
+                        <div class="productImage">
+                            <a href="#" class="">
+                                <img src="http://localhost:8080//Ecommerce-Computec/backend/vistas/img/productos/laptops/convertibles/convertible_3.webp" class="img-responsive">
+                            </a>
+                        </div>
+
+                        <div class="producto-info">
+                            <div class="nombre">Producto de prueba</div>
+                            <div class="new">Nuevo</div>
+                            <div class="precio">S/ 15.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item-container">
+                    <div class="product-item">
+
+                        <div class="productImage">
+                            <a href="#" class="">
+                                <img src="http://localhost:8080//Ecommerce-Computec/backend/vistas/img/productos/laptops/convertibles/convertible_3.webp" class="img-responsive">
+                            </a>
+                        </div>
+
+                        <div class="producto-info">
+                            <div class="nombre">Producto de prueba</div>
+                            <div class="new">Nuevo</div>
+                            <div class="precio">S/ 15.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item-container">
+                    <div class="product-item">
+
+                        <div class="productImage">
+                            <a href="#" class="">
+                                <img src="http://localhost:8080//Ecommerce-Computec/backend/vistas/img/productos/laptops/convertibles/convertible_3.webp" class="img-responsive">
+                            </a>
+                        </div>
+
+                        <div class="producto-info">
+                            <div class="nombre">Producto de prueba</div>
+                            <div class="new">Nuevo</div>
+                            <div class="precio">S/ 15.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item-container">
+                    <div class="product-item">
+
+                        <div class="productImage">
+                            <a href="#" class="">
+                                <img src="http://localhost:8080//Ecommerce-Computec/backend/vistas/img/productos/laptops/convertibles/convertible_3.webp" class="img-responsive">
+                            </a>
+                        </div>
+
+                        <div class="producto-info">
+                            <div class="nombre">Producto de prueba</div>
+                            <div class="new">Nuevo</div>
+                            <div class="precio">S/ 15.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item-container">
+                    <div class="product-item">
+
+                        <div class="productImage">
+                            <a href="#" class="">
+                                <img src="http://localhost:8080//Ecommerce-Computec/backend/vistas/img/productos/laptops/convertibles/convertible_3.webp" class="img-responsive">
+                            </a>
+                        </div>
+
+                        <div class="producto-info">
+                            <div class="nombre">Producto de prueba</div>
+                            <div class="new">Nuevo</div>
+                            <div class="precio">S/ 15.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item-container">
+                    <div class="product-item">
+
+                        <div class="productImage">
+                            <a href="#" class="">
+                                <img src="http://localhost:8080//Ecommerce-Computec/backend/vistas/img/productos/laptops/convertibles/convertible_3.webp" class="img-responsive">
+                            </a>
+                        </div>
+
+                        <div class="producto-info">
+                            <div class="nombre">Producto de prueba</div>
+                            <div class="new">Nuevo</div>
+                            <div class="precio">S/ 15.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item-container">
+                    <div class="product-item">
+
+                        <div class="productImage">
+                            <a href="#" class="">
+                                <img src="http://localhost:8080//Ecommerce-Computec/backend/vistas/img/productos/laptops/convertibles/convertible_3.webp" class="img-responsive">
+                            </a>
+                        </div>
+
+                        <div class="producto-info">
+                            <div class="nombre">Producto de prueba</div>
+                            <div class="new">Nuevo</div>
+                            <div class="precio">S/ 15.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item-container">
+                    <div class="product-item">
+
+                        <div class="productImage">
+                            <a href="#" class="">
+                                <img src="http://localhost:8080//Ecommerce-Computec/backend/vistas/img/productos/laptops/convertibles/convertible_3.webp" class="img-responsive">
+                            </a>
+                        </div>
+
+                        <div class="producto-info">
+                            <div class="nombre">Producto de prueba</div>
+                            <div class="new">Nuevo</div>
+                            <div class="precio">S/ 15.00</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+

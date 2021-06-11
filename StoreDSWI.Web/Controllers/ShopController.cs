@@ -6,11 +6,24 @@ using System.Web.Mvc;
 //
 using StoreDSWI.Web.ViewModels;
 using StoreDSWI.Services;
+using StoreDSWI.Web.Code;
 
 namespace StoreDSWI.Web.Controllers
 {
     public class ShopController : Controller
     {
+        public ActionResult Index(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy)
+        {
+            ShopViewModels model = new ShopViewModels();
+
+            model.FeaturedCategories = CategoriesService.Instance.GetFeaturedCategories();
+            model.MaximumPrice = ProductsService.Instance.GetMaximumPrice();
+            model.Products = ProductsService.Instance.SearchProducts(searchTerm, minimumPrice, maximumPrice, categoryID, sortBy);
+            model.SortBy = sortBy;
+
+            return View(model);
+        }
+
         public ActionResult Checkout()
         {
             CheckoutViewModels model = new CheckoutViewModels();
