@@ -56,7 +56,7 @@
 <div>
     @if (Model.Pager != null)
     {
-        if (Model.Pager.CurrentPage > 1)
+        if (Model.Pager.CurrentPage > 1 && Model.Pager.TotalPages > 1)
         {
             <button class="btn btn-default pageButtons" data-pageno="1">Primero</button>
             <button class="btn btn-default pageButtons" data-pageno="@(Model.Pager.CurrentPage -1)">Anterior</button>
@@ -84,7 +84,7 @@
         $.ajax({
             url: '@Url.Action("CategoryTable", "Category")',
             data: {
-                pageNo: $(this).attr("data-pageNo"),                
+                pageNo: $(this).attr("data-pageno"),                
                 @* search: '@Model.SearchTerm' *@
             }
         })

@@ -28,44 +28,19 @@
                                 <li>
                                     <div class="thumb-image detail_images"> <img src="@imageURL" data-imagezoom="true" class="img-responsive" alt=""> </div>
                                 </li>
-
-
-                                @*<li data-thumb="images/s2.jpg">
-                                        <div class="thumb-image"> <img src="images/s2.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
-                                    </li>
-                                    <li data-thumb="images/s3.jpg">
-                                        <div class="thumb-image"> <img src="images/s3.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
-                                    </li>*@
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-6 single-top-right">
                         <h3 class="item_name">@Model.Product.Name</h3>
                         <p>Tiempo de procesamiento: el artículo se enviará dentro de 2-3 días hábiles.</p>
-                        @*<div class="single-rating">
-                                <ul>
-                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    <li class="rating">20 valoraciones</li>
-                                    <li><a href="#">Agrega tu evaluación</a></li>
-                                </ul>
-                            </div>*@
                         <div class="single-price">
                             <ul>
                                 <li>S/ @Model.Product.Price</li>
                             </ul>
                         </div>
                         <p class="single-price-text">@Model.Product.Description</p>
-                        <form action="#" method="post">
-                            <input type="hidden" name="cmd" value="_cart" />
-                            <input type="hidden" name="add" value="1" />
-                            <input type="hidden" name="w3ls_item" value="Snow Blower" />
-                            <input type="hidden" name="amount" value="540.00" />
-                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Agregar al carro</button>
-                        </form>
+                        <button type="submit" class="productAddToCart w3ls-cart pw3ls-cart" data-id="@Model.Product.ID"><i class="fa fa-cart-plus" aria-hidden="true"></i> Agregar al carro</button>
                     </div>
                     <div class="clearfix"> </div>
                 </div>
@@ -85,3 +60,37 @@
         <div class="swiper-button-prev"></div>
     </div>
 }
+
+<script>
+
+    var products;
+    $(".productAddToCart").click(function () {
+
+        var existingCookieData = $.cookie('CartProducts');
+
+        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
+
+            products = existingCookieData.split('-');
+
+        }
+
+        else {
+            products = [];
+        }
+
+        var productID = $(this).attr('data-id');
+
+        products.push(productID);
+
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+        updateCarProducts();
+
+        Swal.fire(
+            "Producto Agregado",
+            "El producto se agregado al carro correctamente",
+            "success"
+        )
+    });
+
+</script>

@@ -122,8 +122,9 @@ namespace StoreDSWI.Services
         {
             using (var context = new CBContext())
             {
-                var category = context.Categories.Find(ID);
+                var category = context.Categories.Where(x=>x.ID == ID).Include(x=>x.Products).FirstOrDefault();
 
+                context.Products.RemoveRange(category.Products); //eliminé los productos de la categoría.
                 context.Categories.Remove(category);
                 context.SaveChanges();
             }

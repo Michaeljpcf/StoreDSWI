@@ -199,6 +199,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\flexslider.css" />
     <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\ken-burns.css" />
     <Content Include="Content\menu.css" />
     <Content Include="Content\owl.carousel.css" />
@@ -295,6 +296,10 @@
     <Content Include="Images\audifonos_gamer\audifono_gamer_7.webp" />
     <Content Include="Images\audifonos_gamer\audifono_gamer_8.webp" />
     <Content Include="Images\audifonos_gamer\audifono_gamer_9.webp" />
+    <Content Include="Scripts\countries-and-cities.json" />
+    <Content Include="Scripts\countries.json" />
+    <Content Include="Scripts\departamentos.json" />
+    <Content Include="Scripts\distritos.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\easing.js" />
@@ -306,6 +311,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-scrolltofixed-min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.classycountdown.js" />
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.flexslider.js" />
@@ -373,6 +379,8 @@
     <Content Include="Views\Widgets\Products.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Shop\Index.cshtml" />
+    <Content Include="Views\Shop\FilterProducts.cshtml" />
+    <Content Include="Scripts\provincias.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

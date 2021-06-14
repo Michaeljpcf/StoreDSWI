@@ -19,35 +19,17 @@ namespace StoreDSWI.Web.Controllers
 
         public ActionResult ProductTable(string search, int? pageNo)
         {
+            var pageSize = ConfigurationsService.Instance.PageSize();
+
             ProductSearchViewModel model = new ProductSearchViewModel();
+            model.SearchTerm = search;
 
-            //"anterior"
-            model.PageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+            pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
 
-            ////Similar a la "anterior"
-            //if (pageNo.HasValue)
-            //{
-            //    if (pageNo.Value > 0)
-            //    {
-            //        model.PageNo = pageNo.Value;
-            //    }
-            //    else
-            //    {
-            //        model.PageNo = 1;
-            //    }
-            //}
-            //else
-            //{
-            //    model.PageNo = 1;
-            //}
+            var totalRecords = ProductsService.Instance.GetProductsCount(search);
+            model.Products = ProductsService.Instance.GetProducts(search, pageNo.Value, pageSize);
 
-            model.Products = ProductsService.Instance.GetProducts(model.PageNo);
-
-            if (string.IsNullOrEmpty(search) == false)
-            {
-                model.SearchTerm = search;
-                model.Products = model.Products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
-            }
+            model.Pager = new Pager(totalRecords, pageNo, pageSize);
 
             return PartialView(model);
         }
@@ -103,8 +85,15 @@ namespace StoreDSWI.Web.Controllers
             existingProduct.Name = model.Name;
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
-            existingProduct.Category = CategoriesService.Instance.GetCategory(model.CategoryID);
-            existingProduct.ImageURL = model.ImageURL;
+
+            existingProduct.Category = null; //nulo, porque la clave de referencia se cambia a continuación
+            existingProduct.CategoryID = model.CategoryID;
+
+            //no actualice la URL de la imagen si está vacía
+            if (!string.IsNullOrEmpty(model.ImageURL))
+            {
+                existingProduct.ImageURL = model.ImageURL;
+            }
 
             ProductsService.Instance.UpdateProduct(existingProduct);
 

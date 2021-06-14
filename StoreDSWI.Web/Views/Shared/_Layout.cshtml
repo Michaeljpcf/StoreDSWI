@@ -9,9 +9,9 @@
         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
                function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- Custom Theme files -->
-    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/swiper.min.css" rel="stylesheet" type="text/css" /> <!-- swiper -->
-    <link href="~/Content/style.css" rel="stylesheet" type="text/css" media="all" />
+    @*<link href="~/Content/style.css" rel="stylesheet" type="text/css" media="all" />*@
     <link href="~/Content/MyStyle.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/menu.css" rel="stylesheet" type="text/css" media="all" /> <!-- menu style -->
     <link href="~/Content/ken-burns.css" rel="stylesheet" type="text/css" media="all" /> <!-- banner slider -->
@@ -21,12 +21,14 @@
     <!-- font-awesome icons -->
     <link href="~/Content/font-awesome.css" rel="stylesheet">
     <!-- //font-awesome icons -->
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
     <!-- js -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/Scripts/jquery.min.js"></script>
     <script src="~/Scripts/jquery.cookie.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/swiper.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     @*<script src="~/Scripts/jquery-2.2.3.min.js"></script>*@
     <!-- //js -->
     <!-- web-fonts -->
@@ -145,14 +147,29 @@
                         <li class="dropdown head-dpdn">
                             <a href="@Url.Action("Checkout","Shop")" class="dropdown-toggle">CARRO DE COMPRAS</a>
                         </li>
-                        <li class="dropdown head-dpdn">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> Mi Cuenta<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="login.html">Iniciar Sesión </a></li>
-                                <li><a href="signup.html">Registrarse</a></li>
-                                <li><a href="login.html">Mis Órdenes</a></li>
-                            </ul>
-                        </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="dropdown head-dpdn">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> @User.Identity.Name<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="login.html">Iniciar Sesión </a></li>
+                                    <li><a href="signup.html">Registrarse</a></li>
+                                    <li><a href="login.html">Mis Órdenes</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="dropdown head-dpdn">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> Mi Cuenta<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="login.html">Iniciar Sesión </a></li>
+                                    <li><a href="signup.html">Registrarse</a></li>
+                                    <li><a href="login.html">Mis Órdenes</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -167,23 +184,28 @@
                     </h1>
                 </div>
                 <div class="header-search">
-                    <form action="#" method="post">
+                    <form>
                         <input type="search" name="Search" placeholder="Buscar un producto..." required="">
+                        @*<input type="search" class="search-field" placeholder="Buscar un producto…" value="@Model.SearchTerm" name="searchTerm" required="">*@
                         <button type="submit" class="btn btn-default" aria-label="Left Align">
                             <i class="fa fa-search" aria-hidden="true"> </i>
                         </button>
                     </form>
                 </div>
                 <div class="header-cart">
-                    <div class="my-account">
-                        <a href="contact.html"><i class="fa fa-map-marker" aria-hidden="true"></i> CONTÁCTENOS</a>
-                    </div>
                     <div class="cart">
-                        <form action="#" method="post" class="last">
+                        <div class="box-cart nav-top-cart-wrapper">
+                            <a href="@Url.Action("Checkout","Shop")">
+                                <i class="fa fa-cart-arrow-down"></i>
+                                <span id="cartProductsCount">0</span>
+                            </a>
+                        </div>
+
+                        @*<form action="#" method="post" class="last">
                             <input type="hidden" name="cmd" value="_cart" />
                             <input type="hidden" name="display" value="1" />
                             <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-                        </form>
+                        </form>*@
                     </div>
                     <div class="clearfix"> </div>
                 </div>
@@ -325,7 +347,7 @@
     <!-- ======= SWIPER =======-->
     <!-- menu js aim -->
     <script src="~/Scripts/jquery.menu-aim.js"></script>
-    <script src="~/Scripts/main.js"></script> <!-- Resource jQuery -->
+    <script src="~/Scripts/main.js"></script> <!-- Resource jQuery -->    
     <!-- //menu js aim -->
     <!-- Bootstrap core JavaScript
     ================================================== -->

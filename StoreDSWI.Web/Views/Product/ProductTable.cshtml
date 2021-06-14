@@ -67,20 +67,36 @@
 </table>
 
 <div>
-    @if (Model.PageNo != 1)
+    @if (Model.Pager != null)
     {
-        <button class="btn btn-default pageButtons" data-pageNo="@(Model.PageNo - 1)">Anterior</button>
+        if (Model.Pager.CurrentPage > 1 && Model.Pager.TotalPages > 1)
+        {
+            <button class="btn btn-default pageButtons" data-pageno="1">Primero</button>
+            <button class="btn btn-default pageButtons" data-pageno="@(Model.Pager.CurrentPage -1)">Anterior</button>
+        }
+
+        for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+        {
+            string activeClass = Model.Pager.CurrentPage == page ? "active" : string.Empty;
+
+            <button class="btn btn-default @activeClass pageButtons" data-pageno="@page">@page</button>
+        }
+
+        if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+        {
+            <button class="btn btn-default pageButtons" data-pageno="@(Model.Pager.CurrentPage + 1)">Siguiente</button>
+            <button class="btn btn-default pageButtons" data-pageno="@Model.Pager.EndPage">Último</button>
+        }
     }
-    <button class="btn btn-default pageButtons" data-pageNo="@(Model.PageNo + 1)">Siguiente</button>
 </div>
 
 <script type="text/javascript">    
 
     $(".pageButtons").click(function () {
         $.ajax({
-            url: '@Url.Action("ProductTable", "Product")',//'/Product/ProductTable',
+            url: '@Url.Action("ProductTable", "Product")',
             data: {
-                pageNo : $(this).attr("data-pageNo")
+                pageNo : $(this).attr("data-pageno")
             }
         })
         .done(function (response) {

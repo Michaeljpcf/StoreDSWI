@@ -11,6 +11,7 @@ using StoreDSWI.Web.ViewModels;
 
 namespace StoreDSWI.Web.Controllers
 {
+    //[Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         [HttpGet]
@@ -25,6 +26,7 @@ namespace StoreDSWI.Web.Controllers
             model.SearchTerm = search;
 
             pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+
             var totalRecords = CategoriesService.Instance.GetCategoriesCount(search);
             model.Categories = CategoriesService.Instance.GetCategories(search, pageNo.Value);
 
