@@ -1,0 +1,103 @@
+﻿@model OrdersViewModels
+@{
+    ViewBag.Title = "Orders";
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section">
+                    <h2 class="title">
+                        Órdenes
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="tableContainer">
+
+            <div class="col-md-12">
+                <form method="post">
+                    <div class="col-md-8">
+                        <div class="input-group form-group">
+                            <input class="form-control" id="searchTxt" name="UserID" style="padding: 23px;" value="@Model.UserID" />
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default" id="searchBtn">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <a type="button" class="btn btn-primary text-uppercase" id="resetBtn" href="@Url.Action("Index", "Order", new { pageNo = 1 })">Resetear</a>
+                    </div>
+                </form>
+            </div>
+
+            <table id="OrdersTable" class="table table-striped text-center" style="font-size: 17px;">
+                <thead>
+                    <tr style="font-weight:700;">
+                        <td>Usuario ID</td>
+                        <td>Precio total</td>
+                        <td>Estado</td>
+                        <td>Accciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Orders != null && Model.Orders.Count > 0)
+                    {
+                        foreach (var order in Model.Orders)
+                        {
+                            <tr>
+                                <td>@order.UserID</td>
+                                <td>@order.TotalAmount</td>
+                                <td>@order.Status</td>
+                                <td>
+                                    <a class="detailsBtn btn btn-default text-uppercase" data-id="@order.ID" href="@Url.Action("Details", "Order", new { ID = order.ID })">Detalles</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="text-danger" colspan="4">No se encontraron órdenes.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div>
+                @if (Model.Pager != null && Model.Pager.TotalPages > 1)
+                {
+                    if (Model.Pager.CurrentPage > 1)
+                    {
+                        <a class="btn btn-default pageButtons" data-pageno="1" href="@Url.Action("Index", "Order", new { userID = Model.UserID, status = Model.Status, pageNo = 1 })">Primero</a>
+                        <a class="btn btn-default pageButtons" data-pageno="@(Model.Pager.CurrentPage -1)" href="@Url.Action("Index", "Order", new { userID = Model.UserID, status = Model.Status, pageNo = Model.Pager.CurrentPage - 1 })">Anterior</a>
+                    }
+
+                    for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+                    {
+                        string activeClass = Model.Pager.CurrentPage == page ? "active" : string.Empty;
+
+                        <a class="btn btn-default @activeClass pageButtons" data-pageno="@page" href="@Url.Action("Index", "Order", new { userID = Model.UserID, status = Model.Status, pageNo = page })">@page</a>
+                    }
+
+                    if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                    {
+                        <a class="btn btn-default pageButtons" data-pageno="@(Model.Pager.CurrentPage + 1)" href="@Url.Action("Index", "Order", new { userID = Model.UserID, status = Model.Status, pageNo = Model.Pager.CurrentPage + 1 })">Siguiente</a>
+                        <a class="btn btn-default pageButtons" data-pageno="@Model.Pager.EndPage" href="@Url.Action("Index", "Order", new { userID = Model.UserID, status = Model.Status, pageNo = Model.Pager.EndPage })">Último</a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().top - 125
+        }, 1000);
+    }
+</script>
+
