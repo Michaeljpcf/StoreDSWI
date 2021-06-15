@@ -10,6 +10,7 @@ namespace StoreDSWI.Web.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "StoreDSWI.Web.Models.ApplicationDbContext";
         }
 
         protected override void Seed(StoreDSWI.Web.Models.ApplicationDbContext context)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 //
 using StoreDSWI.Entities;
+using StoreDSWI.Web.Models;
 
 namespace StoreDSWI.Web.ViewModels
 {
@@ -11,6 +12,7 @@ namespace StoreDSWI.Web.ViewModels
     {
         public List<Product> CartProducts { get; set; }
         public List<int> CartProductIDs { get; set; }
+        public ApplicationUser User { get; set; }
     }
 
     public class ShopViewModels

@@ -7,11 +7,39 @@ using System.Web.Mvc;
 using StoreDSWI.Web.ViewModels;
 using StoreDSWI.Services;
 using StoreDSWI.Web.Code;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace StoreDSWI.Web.Controllers
 {
     public class ShopController : Controller
     {
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         public ActionResult Index(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy, int? pageNo)
         {
             var pageSize = ConfigurationsService.Instance.ShopPageSize();
@@ -68,6 +96,7 @@ namespace StoreDSWI.Web.Controllers
 
                 model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
                 model.CartProducts = ProductsService.Instance.GetProducts(model.CartProductIDs);
+                model.User = UserManager.FindById(User.Identity.GetUserId());
             }
 
             return View(model);

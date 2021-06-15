@@ -163,35 +163,29 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label>Nombre</label>
-                                    <input type="text" />
+                                    <input type="text" value="@Model.User.Name" />
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label>Apellidos</label>
-                                    <input type="text" />
+                                    <input type="text" value="@Model.User.LastName"/>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-info mb-4">
                                     <label>Dirección</label>
-                                    <input class="billing-address" placeholder="Número de casa y nombre de la calle" type="text" />
+                                    <input class="billing-address" placeholder="Número de casa y nombre de la calle" type="text" value="@Model.User.Address"/>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-4">
-                                    <label>Teléfono Celular</label>
-                                    <input type="text" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-12 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label>Correo Electrónico</label>
-                                    <input type="text">
+                                    <input type="text" value="@Model.User.Email">
                                 </div>
                             </div>
                         </div>
-                        <div class="checkout-account mb-30px">
+                        @*<div class="checkout-account mb-30px">
                             <input class="checkout-toggle2 w-auto h-auto" type="checkbox" />
                             <label>Create an account?</label>
                         </div>
@@ -199,9 +193,7 @@
                             <input placeholder="Email address" type="email" />
                             <input placeholder="Password" type="password" />
                             <button class="btn-hover checkout-btn" type="submit">register</button>
-                        </div>
-
-
+                        </div>*@
                     </div>
                 </div>
                 <div class="col-lg-5 mt-md-30px">

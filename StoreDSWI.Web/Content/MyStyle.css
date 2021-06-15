@@ -41,6 +41,34 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
     vertical-align: inherit;
 }
 
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="tel"], input[type="color"] {
+    background-color: #ffffff;
+    height: 50px;
+    width: 100%;
+    padding-left: 17px;
+    line-height: 30px;
+    letter-spacing: 0.6px;
+    font-weight: 400;
+    outline: none;
+    border: 1px solid #ebebeb;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus {
+    border: 1px solid #f63440!important;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.form-control {
+    border-radius: inherit;
+}
+
 .active {
     background: #f63440 !important;
     border: 1px solid #f63440 !important;
