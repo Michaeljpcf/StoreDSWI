@@ -1,34 +1,34 @@
 ﻿@model CheckoutViewModels
 
-@{ 
+@{
     var defaultImageURL = "/Content/images/system/placeholder-image.png";
 }
 
 @*@if (Model != null)
-{
-    if (Model.CartProducts != null && Model.CartProducts.Count > 0)
     {
-        <div>
-            @foreach (var product in Model.CartProducts)
-            {
-                var productQuantity = Model.CartProductIDs.Where(productID => productID == product.ID).Count();
-                <div>
-                    Nombre: @product.Name - Precio: @product.Price - Cantidad: @productQuantity - Precio total: @(product.Price * productQuantity)
-                </div>
-            }
-        </div>
+        if (Model.CartProducts != null && Model.CartProducts.Count > 0)
+        {
+            <div>
+                @foreach (var product in Model.CartProducts)
+                {
+                    var productQuantity = Model.CartProductIDs.Where(productID => productID == product.ID).Count();
+                    <div>
+                        Nombre: @product.Name - Precio: @product.Price - Cantidad: @productQuantity - Precio total: @(product.Price * productQuantity)
+                    </div>
+                }
+            </div>
 
-        <div>
-            Total: @Model.CartProducts.Sum(x => x.Price * Model.CartProductIDs.Where(productID => productID == x.ID).Count())
-        </div>
-    }
-    else
-    {
-        <div>
-            No hay productos en el carro.
-        </div>
-    }
-}*@
+            <div>
+                Total: @Model.CartProducts.Sum(x => x.Price * Model.CartProductIDs.Where(productID => productID == x.ID).Count())
+            </div>
+        }
+        else
+        {
+            <div>
+                No hay productos en el carro.
+            </div>
+        }
+    }*@
 
 
 @if (Model != null && Model.CartProducts != null && Model.CartProducts.Count > 0)
@@ -38,18 +38,18 @@
         <!-- Cart Area Start -->
         <!--<div class="cart-main-area pt-100px pb-100px fieldset activeFieldset" id="cart">
             <div class="row">-->
-                <!-- breadcrumb-area start -->
-                <!--<div class="breadcrumb-area" style="margin-bottom:50px">
-                    <div class="container">
-                        <div class="row align-items-center justify-content-center">
-                            <div class="col-12 text-center">
-                                <h2 class="breadcrumb-title">CARRO DE COMPRAS</h2>
-                            </div>
-                        </div>
+        <!-- breadcrumb-area start -->
+        <!--<div class="breadcrumb-area" style="margin-bottom:50px">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-12 text-center">
+                        <h2 class="breadcrumb-title">CARRO DE COMPRAS</h2>
                     </div>
-                </div>-->
-                <!-- breadcrumb-area end -->
-                <!--<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                </div>
+            </div>
+        </div>-->
+        <!-- breadcrumb-area end -->
+        <!--<div class="col-lg-12 col-md-12 col-sm-12 col-12">
                     <form action="#">
                         <div class="table-content table-responsive cart-table-content">
                             <table class="table">
@@ -126,11 +126,6 @@
             </div>
         </div>-->
         <!-- Cart Area End -->
-
-
-
-
-
         <!-- checkout area start -->
         <div class="checkout-area pb-100px fieldset activeFieldset" id="checkout" hidden>
 
@@ -145,16 +140,15 @@
                 </div>
             </div>
             <!-- breadcrumb-area end -->
-
             @*<div class="row">
-            <div class="col-lg-12">
-                <div class="cart-shiping-update-wrapper mb-30px">
-                    <div class="cart-shiping-update">
-                        <a href="#cart" style="color:#000;" class="prevBtn">Volver</a>
+                    <div class="col-lg-12">
+                        <div class="cart-shiping-update-wrapper mb-30px">
+                            <div class="cart-shiping-update">
+                                <a href="#cart" style="color:#000;" class="prevBtn">Volver</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>*@
+                </div>*@
             <div class="row">
                 <div class="col-lg-7">
                     <div class="billing-info-wrap">
@@ -169,13 +163,13 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label>Apellidos</label>
-                                    <input type="text" value="@Model.User.LastName"/>
+                                    <input type="text" value="@Model.User.LastName" />
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-info mb-4">
                                     <label>Dirección</label>
-                                    <input class="billing-address" placeholder="Número de casa y nombre de la calle" type="text" value="@Model.User.Address"/>
+                                    <input class="billing-address" type="text" value="@Model.User.Address" />
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-6">
@@ -185,15 +179,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<div class="checkout-account mb-30px">
-                            <input class="checkout-toggle2 w-auto h-auto" type="checkbox" />
-                            <label>Create an account?</label>
-                        </div>
-                        <div class="checkout-account-toggle open-toggle2 mb-30">
-                            <input placeholder="Email address" type="email" />
-                            <input placeholder="Password" type="password" />
-                            <button class="btn-hover checkout-btn" type="submit">register</button>
-                        </div>*@
                     </div>
                 </div>
                 <div class="col-lg-5 mt-md-30px">
@@ -214,10 +199,9 @@
                                         <tbody>
                                             @foreach (var product in Model.CartProducts)
                                             {
-                                                var imageURL = string.IsNullOrEmpty(product.ImageURL) ? defaultImageURL : product.ImageURL;
                                                 var productQuantity = Model.CartProductIDs.Where(productID => productID == product.ID).Count();
 
-                                                <tr>
+                                                <tr data-id="@product.ID">
                                                     <td class="product-name"><a href="@Url.Action("Details", "Product", new { ID = product.ID })">@product.Name</a></td>
                                                     <td class="product-price-cart"><span class="amount">S/ @product.Price</span></td>
                                                     <td class="product-quantity"><span class="amount">@productQuantity</span></td>
@@ -236,15 +220,95 @@
                             </div>
                         </div>
                         <div class="Place-order mt-25">
-                            <a class="btn-hover" href="#">Pagar</a>
+                            <a id="placeOrderBtn" class="btn-hover">Realizar el pedido</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    <!-- checkout area end -->
+        <!-- checkout area end -->
 
-        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        $("#placeOrderBtn").click(function () {
+            $.ajax({
+                url: '@Url.Action("PlaceOrder", "Shop")',
+                data: {
+                    productIDs: '@string.Join("-", Model.CartProductIDs)'
+                }
+            })
+            .done(function (response) {
+                if (response.Success) {
+
+                    $.cookie('CartProducts', '', { path: '/' });
+                    updateCarProducts();
+
+                    Swal.fire(
+                        "¡Felicidades!",
+                        "Tu orden se procesó con éxito",
+                        "success"
+                    ).then((result) => {
+                        window.location = '@Url.Action("Index","Shop")';
+                    })
+
+                } else {
+
+                    Swal.fire(
+                        "¡Error!",
+                        "Tu orden no se procesó",
+                        "warning"
+                    )
+                }
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FALLÓ");
+            });
+        });
+
+        const fieldset = Array.from(document.querySelectorAll('.fieldset'));
+        console.log(fieldset);
+        const cartContent = document.querySelector('.cartContent');
+        const nextBtn = document.querySelectorAll('.nextBtn');
+        const prevBtn = document.querySelectorAll('.prevBtn');
+
+        nextBtn.forEach((button) => {
+            button.addEventListener('click', () => {
+                changeStep('next');
+            });
+        });
+        prevBtn.forEach((button) => {
+            button.addEventListener('click', () => {
+                changeStep('prev');
+            });
+        });
+
+        function changeStep(btn) {
+            let index = 0;
+            const activeFieldset = document.querySelector('.fieldset.activeFieldset');
+
+            /* ======== ========  ======== ======== */
+            index1 = fieldset.indexOf(activeFieldset);
+            console.log(index1);
+            fieldset[index1].classList.remove('activeFieldset');
+
+            if (btn === 'next') {
+
+                index1++;
+
+            } else if (btn === 'prev') {
+
+                index1--;
+
+            }
+
+            fieldset[index1].classList.add('activeFieldset');
+        }
+
+
+    </script>
 }
 else
 {
@@ -255,396 +319,251 @@ else
 
 
 <!--<div class="cartContent">-->
-
-    <!-- Cart Area Start -->
-    <!--<div class="cart-main-area pt-100px pb-100px fieldset activeFieldset" id="cart">
-        <div class="row">-->
-            <!-- breadcrumb-area start -->
-            <!--<div class="breadcrumb-area" style="margin-bottom:50px">
-                <div class="container">
-                    <div class="row align-items-center justify-content-center">
-                        <div class="col-12 text-center">
-                            <h2 class="breadcrumb-title">CARRO DE COMPRAS</h2>
-                        </div>
-                    </div>
+<!-- Cart Area Start -->
+<!--<div class="cart-main-area pt-100px pb-100px fieldset activeFieldset" id="cart">
+    <div class="row">-->
+<!-- breadcrumb-area start -->
+<!--<div class="breadcrumb-area" style="margin-bottom:50px">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-12 text-center">
+                <h2 class="breadcrumb-title">CARRO DE COMPRAS</h2>
+            </div>
+        </div>
+    </div>
+</div>-->
+<!-- breadcrumb-area end -->
+<!--<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <form action="#">
+                <div class="table-content table-responsive cart-table-content">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre de producto</th>
+                                <th>Precio x Unid.</th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <a href="#">
+                                        <img class="img-responsive ml-15px"
+                                             src="assets/images/product-image/1.jpg" alt="" />
+                                    </a>
+                                </td>
+                                <td class="product-name"><a href="#">Product Name</a></td>
+                                <td class="product-price-cart"><span class="amount">$60.00</span></td>
+                                <td class="product-quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" type="text" name="qtybutton"
+                                               value="1" />
+                                    </div>
+                                </td>
+                                <td class="product-subtotal">$70.00</td>
+                                <td class="product-remove">
+                                    <a href="#"><i class="fa fa-times"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <a href="#">
+                                        <img class="img-responsive ml-15px"
+                                             src="assets/images/product-image/2.jpg" alt="" />
+                                    </a>
+                                </td>
+                                <td class="product-name"><a href="#">Product Name</a></td>
+                                <td class="product-price-cart"><span class="amount">$50.00</span></td>
+                                <td class="product-quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" type="text" name="qtybutton"
+                                               value="1" />
+                                    </div>
+                                </td>
+                                <td class="product-subtotal">$80.00</td>
+                                <td class="product-remove">
+                                    <a href="#"><i class="fa fa-times"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <a href="#">
+                                        <img class="img-responsive ml-15px"
+                                             src="assets/images/product-image/3.jpg" alt="" />
+                                    </a>
+                                </td>
+                                <td class="product-name"><a href="#">Product Name</a></td>
+                                <td class="product-price-cart"><span class="amount">$70.00</span></td>
+                                <td class="product-quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" type="text" name="qtybutton"
+                                               value="1" />
+                                    </div>
+                                </td>
+                                <td class="product-subtotal">$90.00</td>
+                                <td class="product-remove">
+                                    <a href="#"><i class="fa fa-times"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>-->
-            <!-- breadcrumb-area end -->
-            <!--<div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <form action="#">
-                    <div class="table-content table-responsive cart-table-content">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Imagen</th>
-                                    <th>Nombre de producto</th>
-                                    <th>Precio x Unid.</th>
-                                    <th>Cantidad</th>
-                                    <th>Subtotal</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#">
-                                            <img class="img-responsive ml-15px"
-                                                 src="assets/images/product-image/1.jpg" alt="" />
-                                        </a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Product Name</a></td>
-                                    <td class="product-price-cart"><span class="amount">$60.00</span></td>
-                                    <td class="product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton"
-                                                   value="1" />
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$70.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="fa fa-times"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#">
-                                            <img class="img-responsive ml-15px"
-                                                 src="assets/images/product-image/2.jpg" alt="" />
-                                        </a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Product Name</a></td>
-                                    <td class="product-price-cart"><span class="amount">$50.00</span></td>
-                                    <td class="product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton"
-                                                   value="1" />
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$80.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="fa fa-times"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#">
-                                            <img class="img-responsive ml-15px"
-                                                 src="assets/images/product-image/3.jpg" alt="" />
-                                        </a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Product Name</a></td>
-                                    <td class="product-price-cart"><span class="amount">$70.00</span></td>
-                                    <td class="product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton"
-                                                   value="1" />
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$90.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="fa fa-times"></i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="cart-shiping-update-wrapper">
-                                <div class="cart-shiping-update">
-                                    <a href="@Url.Action("Index","Shop")" style="color:#000;">Continuar Comprando</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
                 <div class="row">
-                    <div class="col-lg-4 col-md-12 pull-right">
-                        <div class="grand-totall">
-                            <div class="title-wrap">
-                                <h4 class="cart-bottom-title section-bg-gary-cart">Resumen de tu orden</h4>
+                    <div class="col-lg-12">
+                        <div class="cart-shiping-update-wrapper">
+                            <div class="cart-shiping-update">
+                                <a href="@Url.Action("Index","Shop")" style="color:#000;">Continuar Comprando</a>
                             </div>
-                            <h5>SubTotal <span>$260.00</span></h5>
-                            <h4 class="grand-totall-title">Total <span>$260.00</span></h4>
-                            <a href="#checkout" class="nextBtn">
-                                Proceder con la compra
-                            </a>
                         </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-lg-4 col-md-12 pull-right">
+                    <div class="grand-totall">
+                        <div class="title-wrap">
+                            <h4 class="cart-bottom-title section-bg-gary-cart">Resumen de tu orden</h4>
+                        </div>
+                        <h5>SubTotal <span>$260.00</span></h5>
+                        <h4 class="grand-totall-title">Total <span>$260.00</span></h4>
+                        <a href="#checkout" class="nextBtn">
+                            Proceder con la compra
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>-->
-    <!-- Cart Area End -->
-    <!-- checkout area start -->
-    <!--<div class="checkout-area pt-100px pb-100px fieldset" id="checkout" hidden>-->
-
-        <!-- breadcrumb-area start -->
-        <!--<div class="breadcrumb-area" style="margin-bottom:50px">
-            <div class="container">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-12 text-center">
-                        <h2 class="breadcrumb-title">Verificar compra</h2>
-                    </div>
-                </div>
+    </div>
+</div>-->
+<!-- Cart Area End -->
+<!-- checkout area start -->
+<!--<div class="checkout-area pt-100px pb-100px fieldset" id="checkout" hidden>-->
+<!-- breadcrumb-area start -->
+<!--<div class="breadcrumb-area" style="margin-bottom:50px">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-12 text-center">
+                <h2 class="breadcrumb-title">Verificar compra</h2>
             </div>
-        </div>-->
-        <!-- breadcrumb-area end -->
-
-        <!--<div class="row">
-            <div class="col-lg-12">
-                <div class="cart-shiping-update-wrapper mb-30px">
-                    <div class="cart-shiping-update">
-                        <a href="#cart" style="color:#000;" class="prevBtn">Volver</a>
-                    </div>
+        </div>
+    </div>
+</div>-->
+<!-- breadcrumb-area end -->
+<!--<div class="row">
+        <div class="col-lg-12">
+            <div class="cart-shiping-update-wrapper mb-30px">
+                <div class="cart-shiping-update">
+                    <a href="#cart" style="color:#000;" class="prevBtn">Volver</a>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-7">
-                <div class="billing-info-wrap">
-                    <h3>Detalles de facturación</h3>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-4">
-                                <label>Nombre</label>
-                                <input type="text" />
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-4">
-                                <label>Apellidos</label>
-                                <input type="text" />
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-select mb-4">
-                                <label>Departamento</label>
-                                <select id="selectDepartment" name="Department">
-                                    <option value="">Seleccionar un Departamento</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-select mb-4">
-                                <label>Provincia</label>
-                                <select id="selectProvince" name="Province">
-                                    <option value="">Seleccionar una Provincia</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-select mb-4">
-                                <label>Distrito</label>
-                                <select id="selectDistrict" name="District">
-                                    <option value="">Seleccionar un Distrito</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-info mb-4">
-                                <label>Dirección</label>
-                                <input class="billing-address" placeholder="Número de casa y nombre de la calle" type="text" />
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-4">
-                                <label>Teléfono Celular</label>
-                                <input type="text" />
-                            </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="billing-info-wrap">
+                <h3>Detalles de facturación</h3>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="billing-info mb-4">
+                            <label>Nombre</label>
+                            <input type="text" />
                         </div>
                     </div>
-                    <div class="checkout-account mb-30px">
-                        <input class="checkout-toggle2 w-auto h-auto" type="checkbox" />
-                        <label>Create an account?</label>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="billing-info mb-4">
+                            <label>Apellidos</label>
+                            <input type="text" />
+                        </div>
                     </div>
-                    <div class="checkout-account-toggle open-toggle2 mb-30">
-                        <input placeholder="Email address" type="email" />
-                        <input placeholder="Password" type="password" />
-                        <button class="btn-hover checkout-btn" type="submit">register</button>
+                    <div class="col-lg-12">
+                        <div class="billing-select mb-4">
+                            <label>Departamento</label>
+                            <select id="selectDepartment" name="Department">
+                                <option value="">Seleccionar un Departamento</option>
+                            </select>
+                        </div>
                     </div>
-
-
+                    <div class="col-lg-12">
+                        <div class="billing-select mb-4">
+                            <label>Provincia</label>
+                            <select id="selectProvince" name="Province">
+                                <option value="">Seleccionar una Provincia</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="billing-select mb-4">
+                            <label>Distrito</label>
+                            <select id="selectDistrict" name="District">
+                                <option value="">Seleccionar un Distrito</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="billing-info mb-4">
+                            <label>Dirección</label>
+                            <input class="billing-address" placeholder="Número de casa y nombre de la calle" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="billing-info mb-4">
+                            <label>Teléfono Celular</label>
+                            <input type="text" />
+                        </div>
+                    </div>
                 </div>
+                <div class="checkout-account mb-30px">
+                    <input class="checkout-toggle2 w-auto h-auto" type="checkbox" />
+                    <label>Create an account?</label>
+                </div>
+                <div class="checkout-account-toggle open-toggle2 mb-30">
+                    <input placeholder="Email address" type="email" />
+                    <input placeholder="Password" type="password" />
+                    <button class="btn-hover checkout-btn" type="submit">register</button>
+                </div>
+
+
             </div>
-            <div class="col-lg-5 mt-md-30px">
-                <div class="your-order-area">
-                    <h3>Tu Orden</h3>
-                    <div class="your-order-wrap">
-                        <div class="your-order-product-info">
-                            <div class="your-order-top">
-                                <ul>
-                                    <li>Producto</li>
-                                    <li>Total</li>
-                                </ul>
-                            </div>
-                            <div class="your-order-middle">
-                                <ul>
-                                    <li>
-                                        <span class="order-middle-left">Product Name X 1</span> <span class="order-price">$100 </span>
-                                    </li>
-                                    <li>
-                                        <span class="order-middle-left">Product Name X 1</span> <span class="order-price">$100 </span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="your-order-total">
-                                <ul>
-                                    <li class="order-total">Total a pagar</li>
-                                    <li>$100</li>
-                                </ul>
-                            </div>
+        </div>
+        <div class="col-lg-5 mt-md-30px">
+            <div class="your-order-area">
+                <h3>Tu Orden</h3>
+                <div class="your-order-wrap">
+                    <div class="your-order-product-info">
+                        <div class="your-order-top">
+                            <ul>
+                                <li>Producto</li>
+                                <li>Total</li>
+                            </ul>
+                        </div>
+                        <div class="your-order-middle">
+                            <ul>
+                                <li>
+                                    <span class="order-middle-left">Product Name X 1</span> <span class="order-price">$100 </span>
+                                </li>
+                                <li>
+                                    <span class="order-middle-left">Product Name X 1</span> <span class="order-price">$100 </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="your-order-total">
+                            <ul>
+                                <li class="order-total">Total a pagar</li>
+                                <li>$100</li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="Place-order mt-25">
-                        <a class="btn-hover" href="#">Pagar</a>
-                    </div>
+                </div>
+                <div class="Place-order mt-25">
+                    <a class="btn-hover" href="#">Pagar</a>
                 </div>
             </div>
         </div>
-    </div>-->
-    <!-- checkout area end -->
-
+    </div>
+</div>-->
+<!-- checkout area end -->
 <!--</div>-->
-
-
-<script>
-
-/*----------------------------
-Cart Plus Minus Button
------------------------------- */
-    var CartPlusMinus = $(".cart-plus-minus");
-    //CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
-    //CartPlusMinus.append('<div class="inc qtybutton" data-id="">+</div>');
-    $(".qtybutton").on("click", function () {
-        var $button = $(this);
-        var oldValue = $button.parent().find("input").val();
-        if ($button.text() === "+") {            
-
-            var existingCookieData = $.cookie('CartProducts');
-
-            products = existingCookieData.split('-');    
-
-            $.cookie('CartProducts', products.join('-'), { path: '/' });
-
-            Swal.fire(
-                "Producto Agregado",
-                "El producto se agregado correctamente",
-                "success"
-            )
-
-            var newVal = parseFloat(oldValue);
-
-        } else {
-            // Don't allow decrementing below zero
-            if (oldValue > 1) {
-                var newVal = parseFloat(oldValue);
-
-                var products = $(this).attr('data-id') - 1;
-
-                $.removeCookie('CartProducts', products);
-
-                Swal.fire(
-                    "Disminuyendo Producto",
-                    "El producto se disminuyó correctamente",
-                    "success"
-                )
-            } else {
-                newVal = 1;
-            }
-        }
-        $button.parent().find("input").val(newVal);
-    });
-
-    
-
-    $(".removeItem").click(function () {
-        $(this).parent().parent().remove();
-        $.removeCookie('CartProducts');
-
-        Swal.fire(
-            "Disminuyendo Producto",
-            "El producto se disminuyó correctamente",
-            "success"
-        )
-    });
-
-    const fieldset = Array.from(document.querySelectorAll('.fieldset'));
-    console.log(fieldset);
-    const cartContent = document.querySelector('.cartContent');
-    const nextBtn = document.querySelectorAll('.nextBtn');
-    const prevBtn = document.querySelectorAll('.prevBtn');
-
-    //if (idUsuario === null) { }
-    //else {
-
-    nextBtn.forEach((button) => {
-        button.addEventListener('click', () => {
-            changeStep('next');
-        });
-    });
-    prevBtn.forEach((button) => {
-        button.addEventListener('click', () => {
-            changeStep('prev');
-        });
-    });
-
-    /*}*/
-
-    function changeStep(btn) {
-        let index = 0;
-        const activeFieldset = document.querySelector('.fieldset.activeFieldset');
-        /*const idUsuario = localStorage.getItem("usuario");*/
-        // const activeStep = document.querySelector('#progressBar .step.activeStep');
-
-        // index = steps.indexOf(activeStep);
-        // console.log(index);
-        // steps[index].classList.remove('activeStep');
-
-        // if (btn === 'next') {
-
-        //     index++;
-
-        // } else if (btn === 'prev') {
-
-        //     index--;
-
-        // }
-
-        // steps[index].classList.add('activeStep');
-
-        /* ======== ========  ======== ======== */
-        index1 = fieldset.indexOf(activeFieldset);
-        console.log(index1);
-        fieldset[index1].classList.remove('activeFieldset');
-
-        if (btn === 'next') {
-
-            index1++;
-
-        } else if (btn === 'prev') {
-
-            index1--;
-
-        }
-
-        fieldset[index1].classList.add('activeFieldset');
-        // steps[index].classList.remove('activeFieldset');
-
-        // if (btn === 'next') {
-
-        //     index++;
-
-        // } else if (btn === 'prev') {
-
-        //     index--;
-
-        // }
-
-        // steps[index].classList.add('activeFieldset');
-    }
-
-
-</script>
-

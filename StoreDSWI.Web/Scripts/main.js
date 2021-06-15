@@ -17,7 +17,67 @@ function updateCarProducts() {
 }
 
 
-var products;
+
+/*----------------------------
+Cart Plus Minus Button
+------------------------------ */
+var CartPlusMinus = $(".cart-plus-minus");
+//CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
+//CartPlusMinus.append('<div class="inc qtybutton" data-id="">+</div>');
+$(".qtybutton").on("click", function () {
+	var $button = $(this);
+	var oldValue = $button.parent().find("input").val();
+	if ($button.text() === "+") {
+
+		var existingCookieData = $.cookie('CartProducts');
+
+		products = existingCookieData.split('-');
+
+		$.cookie('CartProducts', products.join('-'), { path: '/' });
+
+		Swal.fire(
+			"Producto Agregado",
+			"El producto se agregado correctamente",
+			"success"
+		)
+
+		var newVal = parseFloat(oldValue);
+
+	} else {
+		// Don't allow decrementing below zero
+		if (oldValue > 1) {
+			var newVal = parseFloat(oldValue);
+
+			var products = $(this).attr('data-id') - 1;
+
+			$.removeCookie('CartProducts', products);
+
+			Swal.fire(
+				"Disminuyendo Producto",
+				"El producto se disminuyó correctamente",
+				"success"
+			)
+		} else {
+			newVal = 1;
+		}
+	}
+	$button.parent().find("input").val(newVal);
+});
+
+
+
+$(".removeItem").click(function () {
+	$(this).parent().parent().remove();
+	$.removeCookie('CartProducts');
+
+	Swal.fire(
+		"Disminuyendo Producto",
+		"El producto se disminuyó correctamente",
+		"success"
+	)
+});
+
+/*var products;*/
 
 
 /*----------------------------
