@@ -133,7 +133,9 @@
                         "¡Pedido Actualizado!",
                         "El pedido se actualizó con éxito",
                         "success"
-                    )
+                    ).then((result) => {
+                        window.location = '@Url.Action("Index","Order")';
+                    })
 
                 } else {
 
