@@ -1,6 +1,6 @@
 ﻿@model StoreDSWI.Web.ViewModels.HomeViewModel
 @{
-    ViewBag.Title = "Home Page";    
+    ViewBag.Title = "Home Page";
 }
 
 <!-- banner -->
@@ -60,6 +60,39 @@
     <div class="swiper-button-prev"></div>
 </div>
 <!-- //welcome -->
+
+<!-- add-categories -->
+<div class="section-banner">
+    <div class="banner-layout">
+
+        <div class="item col-sm-4 col-xs-12">
+            <a class="canvas" href="#">
+                <div class="resizer">
+                    <img src="~/Images/9.jpg" />
+                </div>
+            </a>
+        </div>
+
+        <div class="item col-sm-4 col-xs-12">
+            <a class="canvas" href="#">
+                <div class="resizer">
+                    <img src="~/Images/10.jpg" />
+                </div>
+            </a>
+        </div>
+
+        <div class="item col-sm-4 col-xs-12">
+            <a class="canvas" href="#">
+                <div class="resizer">
+                    <img src="~/Images/11.jpg" />
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+<!-- //add-categories -->
+
 
 @if (Model.FeaturedCategories != null && Model.FeaturedCategories.Count >= 3)
 {
@@ -123,7 +156,6 @@
     <div class="swiper-button-prev"></div>
 </div>
 <!-- add-products -->
-
 <!-- footer-top -->
 <div class="w3agile-ftr-top">
     <div class="container">

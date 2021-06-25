@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using StoreDSWI.Entities;
+using StoreDSWI.Services;
 using StoreDSWI.Web.Models;
 
 namespace StoreDSWI.Web.Controllers
@@ -15,24 +17,24 @@ namespace StoreDSWI.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private StoreDSWISignInManager _signInManager;
+        private StoreDSWIUserManager _userManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(StoreDSWIUserManager userManager, StoreDSWISignInManager signInManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
+        public StoreDSWISignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<StoreDSWISignInManager>();
             }
             private set 
             { 
@@ -40,11 +42,11 @@ namespace StoreDSWI.Web.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public StoreDSWIUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<StoreDSWIUserManager>();
             }
             private set
             {
@@ -75,7 +77,7 @@ namespace StoreDSWI.Web.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,7 +153,7 @@ namespace StoreDSWI.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, LastName = model.LastName, Address = model.Address };
+                var user = new StoreDSWIUser { UserName = model.UserName, Email = model.Email, Name = model.Name, LastName = model.LastName, Address = model.Address};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -367,7 +369,7 @@ namespace StoreDSWI.Web.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new StoreDSWIUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

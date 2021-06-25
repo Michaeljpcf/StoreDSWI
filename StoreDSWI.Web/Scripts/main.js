@@ -35,12 +35,6 @@ $(".qtybutton").on("click", function () {
 
 		$.cookie('CartProducts', products.join('-'), { path: '/' });
 
-		Swal.fire(
-			"Producto Agregado",
-			"El producto se agregado correctamente",
-			"success"
-		)
-
 		var newVal = parseFloat(oldValue);
 
 	} else {
@@ -52,11 +46,6 @@ $(".qtybutton").on("click", function () {
 
 			$.removeCookie('CartProducts', products);
 
-			Swal.fire(
-				"Disminuyendo Producto",
-				"El producto se disminuyó correctamente",
-				"success"
-			)
 		} else {
 			newVal = 1;
 		}
@@ -69,12 +58,6 @@ $(".qtybutton").on("click", function () {
 $(".removeItem").click(function () {
 	$(this).parent().parent().remove();
 	$.removeCookie('CartProducts');
-
-	Swal.fire(
-		"Disminuyendo Producto",
-		"El producto se disminuyó correctamente",
-		"success"
-	)
 });
 
 /*var products;*/

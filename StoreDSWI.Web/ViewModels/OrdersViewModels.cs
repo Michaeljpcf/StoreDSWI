@@ -18,7 +18,7 @@ namespace StoreDSWI.Web.ViewModels
     public class OrderDetailsViewModels
     {
         public Order Order { get; set; }
-        public ApplicationUser OrderBy { get; set; }
+        public StoreDSWIUser OrderBy { get; set; }
         public List<string> AvailableStatuses { get; set; }
     }
 }

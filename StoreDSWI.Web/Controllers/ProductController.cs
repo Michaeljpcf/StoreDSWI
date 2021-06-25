@@ -12,11 +12,13 @@ namespace StoreDSWI.Web.Controllers
 {
     public class ProductController : Controller
     {
+        [Authorize(Roles = "Administrador")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         public ActionResult ProductTable(string search, int? pageNo)
         {
             var pageSize = ConfigurationsService.Instance.PageSize();
@@ -34,6 +36,7 @@ namespace StoreDSWI.Web.Controllers
             return PartialView(model);
         }
 
+        [Authorize(Roles = "Administrador")]
         //CREAR
         [HttpGet]
         public ActionResult Create()
@@ -44,6 +47,7 @@ namespace StoreDSWI.Web.Controllers
             return PartialView(model);
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public ActionResult Create(NewProductViewModel model)
         {
@@ -59,6 +63,7 @@ namespace StoreDSWI.Web.Controllers
             return RedirectToAction("ProductTable");
         }
 
+        [Authorize(Roles = "Administrador")]
         //ACTUALIZAR
         [HttpGet]
         public ActionResult Edit(int ID)
@@ -78,6 +83,7 @@ namespace StoreDSWI.Web.Controllers
             return PartialView(model);
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public ActionResult Edit(EditProductViewModel model)
         {
@@ -100,6 +106,7 @@ namespace StoreDSWI.Web.Controllers
             return RedirectToAction("ProductTable");
         }
 
+        [Authorize(Roles = "Administrador")]
         //ELIMINAR
         [HttpPost]
         public ActionResult Delete(int ID)

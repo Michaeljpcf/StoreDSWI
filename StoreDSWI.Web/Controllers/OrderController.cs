@@ -10,27 +10,28 @@ using System.Web.Mvc;
 
 namespace StoreDSWI.Web.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class OrderController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private StoreDSWISignInManager _signInManager;
+        private StoreDSWIUserManager _userManager;
 
-        public ApplicationSignInManager SignInManager
+        public StoreDSWISignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<StoreDSWISignInManager>();
             }
             private set
             {
                 _signInManager = value;
             }
         }
-        public ApplicationUserManager UserManager
+        public StoreDSWIUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<StoreDSWIUserManager>();
             }
             private set
             {

@@ -1,0 +1,101 @@
+﻿<div class="w3ls-header">
+    <div class="container">
+        <!--header-one-->
+        <div class="w3ls-header-left">
+            <p><a href="#">Envío gratis por compras de S/.100.00</a></p>
+        </div>
+        <div class="w3ls-header-right">
+            <ul style="font-size: 18px;">
+                <li class="dropdown head-dpdn">
+                    <a href="@Url.Action("Index","Home")" class="dropdown-toggle">INICIO</a>
+                </li>
+                <li class="dropdown head-dpdn">
+                    <a href="@Url.Action("Index","Shop")" class="dropdown-toggle">TIENDA</a>
+                </li>
+                <li class="dropdown head-dpdn">
+                    <a href="@Url.Action("Checkout","Shop")" class="dropdown-toggle">CARRO DE COMPRAS</a>
+                </li>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("Administrador"))
+                    {
+                        <li class="dropdown head-dpdn">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> @User.Identity.Name<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index","Category")">Categorias</a></li>
+                                <li><a href="@Url.Action("Index","Product")">Productos</a></li>
+                                <li><a href="@Url.Action("Index","Order")">Pedidos</a></li>
+                                <li><a id="btnLogOff">Cerrar Sesión</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="dropdown head-dpdn">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> @User.Identity.Name<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a id="btnLogOff">Cerrar Sesión</a></li>
+                            </ul>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="dropdown head-dpdn">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> Mi Cuenta<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Login", "Account")">Iniciar Sesión </a></li>
+                            <li><a href="@Url.Action("Register", "Account")">Registrarse</a></li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+
+<div class="header-two" style=" border-bottom: 1px solid #ddd;margin-bottom: 40px;">
+    <!-- header-two -->
+    <div class="container">
+        <div class="header-logo">
+            <h1 style="margin: 0;">
+                <a href="@Url.Action("Index", "Home")"><span>S</span>tore <i>DSWI</i></a>
+            </h1>
+        </div>
+        <div class="header-search">
+            <form>
+                <input type="search" name="Search" placeholder="Buscar un producto..." required="">
+                @*<input type="search" class="search-field" placeholder="Buscar un producto…" value="@Model.SearchTerm" name="searchTerm" required="">*@
+                <button type="submit" class="btn btn-default" aria-label="Left Align">
+                    <i class="fa fa-search" aria-hidden="true"> </i>
+                </button>
+            </form>
+        </div>
+        <div class="header-cart">
+            <div class="cart">
+                <div class="box-cart nav-top-cart-wrapper">
+                    <a href="@Url.Action("Checkout","Shop")">
+                        <i class="fa fa-cart-arrow-down"></i>
+                        <span id="cartProductsCount">0</span>
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div><!-- //header-two -->
+
+
+<form id="logOffForm" method="post" action="@Url.Action("LogOff","Account")">
+    @Html.AntiForgeryToken()
+</form>
+
+<script>
+    $("#btnLogOff").click(function () {
+        $("#logOffForm").submit();
+    });
+</script>

@@ -49,13 +49,13 @@ namespace StoreDSWI.Web.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Usuario")]
+        //[EmailAddress]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -75,6 +75,10 @@ namespace StoreDSWI.Web.Models
         [Required]
         [Display(Name = "Dirección")]
         public string Address { get; set; }
+
+        [Required]
+        [Display(Name = "Nombre de usuario")]
+        public string UserName { get; set; }
 
         [Required]
         [EmailAddress]

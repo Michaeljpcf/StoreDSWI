@@ -11,7 +11,7 @@ using StoreDSWI.Web.ViewModels;
 
 namespace StoreDSWI.Web.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrador")]
     public class CategoryController : Controller
     {
         [HttpGet]

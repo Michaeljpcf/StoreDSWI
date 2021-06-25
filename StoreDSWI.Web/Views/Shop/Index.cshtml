@@ -82,7 +82,7 @@ LISTAR PRODUCTOS
                 </div>
             </div>
 
-            <div class="related-row">
+            @*<div class="related-row">
                 <h4>Categorias destacadas</h4>
                 <ul>
                     @foreach (var category in Model.FeaturedCategories)
@@ -90,7 +90,7 @@ LISTAR PRODUCTOS
                         <li><a data-href="@Url.Action("FilterProducts","Shop", new { categoryID = category.ID, sortBy = Model.SortBy })" class="dataLink @(Model.CategoryID.HasValue && Model.CategoryID.Value == category.ID ? "active" : string.Empty)">@category.Name</a></li>
                     }
                 </ul>
-            </div>
+            </div>*@
         </div>
         <div class="clearfix"> </div>
     </div>

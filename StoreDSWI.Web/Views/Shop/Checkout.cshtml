@@ -4,52 +4,25 @@
     var defaultImageURL = "/Content/images/system/placeholder-image.png";
 }
 
-@*@if (Model != null)
-    {
-        if (Model.CartProducts != null && Model.CartProducts.Count > 0)
-        {
-            <div>
-                @foreach (var product in Model.CartProducts)
-                {
-                    var productQuantity = Model.CartProductIDs.Where(productID => productID == product.ID).Count();
-                    <div>
-                        Nombre: @product.Name - Precio: @product.Price - Cantidad: @productQuantity - Precio total: @(product.Price * productQuantity)
-                    </div>
-                }
-            </div>
-
-            <div>
-                Total: @Model.CartProducts.Sum(x => x.Price * Model.CartProductIDs.Where(productID => productID == x.ID).Count())
-            </div>
-        }
-        else
-        {
-            <div>
-                No hay productos en el carro.
-            </div>
-        }
-    }*@
-
 
 @if (Model != null && Model.CartProducts != null && Model.CartProducts.Count > 0)
 {
     <div class="cartContent">
-
         <!-- Cart Area Start -->
         <!--<div class="cart-main-area pt-100px pb-100px fieldset activeFieldset" id="cart">
             <div class="row">-->
-        <!-- breadcrumb-area start -->
-        <!--<div class="breadcrumb-area" style="margin-bottom:50px">
-            <div class="container">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-12 text-center">
-                        <h2 class="breadcrumb-title">CARRO DE COMPRAS</h2>
+                <!-- breadcrumb-area start -->
+                <!--<div class="breadcrumb-area" style="margin-bottom:50px">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-12 text-center">
+                                <h2 class="breadcrumb-title">CARRO DE COMPRAS</h2>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>-->
-        <!-- breadcrumb-area end -->
-        <!--<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                </div>-->
+                <!-- breadcrumb-area end -->
+                <!--<div class="col-lg-12 col-md-12 col-sm-12 col-12">
                     <form action="#">
                         <div class="table-content table-responsive cart-table-content">
                             <table class="table">
@@ -127,7 +100,7 @@
         </div>-->
         <!-- Cart Area End -->
         <!-- checkout area start -->
-        <div class="checkout-area pb-100px fieldset activeFieldset" id="checkout" hidden>
+        <div class="checkout-area pb-100px fieldset activeFieldset" id="checkout">
 
             <!-- breadcrumb-area start -->
             <div class="breadcrumb-area" style="margin-bottom:50px">

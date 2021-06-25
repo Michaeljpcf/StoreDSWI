@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using StoreDSWI.Services;
 using StoreDSWI.Web.Models;
 
 namespace StoreDSWI.Web.Controllers
@@ -13,24 +14,24 @@ namespace StoreDSWI.Web.Controllers
     [Authorize]
     public class ManageController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private StoreDSWISignInManager _signInManager;
+        private StoreDSWIUserManager _userManager;
 
         public ManageController()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(StoreDSWIUserManager userManager, StoreDSWISignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
+        public StoreDSWISignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<StoreDSWISignInManager>();
             }
             private set 
             { 
@@ -38,11 +39,11 @@ namespace StoreDSWI.Web.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public StoreDSWIUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<StoreDSWIUserManager>();
             }
             private set
             {
